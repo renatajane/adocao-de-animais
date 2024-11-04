@@ -21,17 +21,37 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Animal {
 
+    // Propriedades de Animal
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_animal")
     private Integer idAnimal;
 
-    @Column(name="categoria")
-    private String categoria;
+    @Column(name="tipo")
+    private String tipo; //ex: gato, cachorro
+
+    @Column(name="idade")
+    private Integer idade;
+
+    @Column(name="raca")
+    private String raca;
+
+    @Column(name="status_adocao")
+    private Boolean statusAdocao;
+
+    @Column(name="imagem")
+    private String imagem;
+
+    @Column(name="descricao")
+    private String descricao; //ex: animal faz uso contínuo de determinada medicação
 
     // Construtor que aceita AnimalDto
     public Animal(AnimalDto animalDto) {
-        this.categoria = animalDto.getCategoria();
+        this.tipo = animalDto.getTipo();
+        this.idade = animalDto.getIdade();
+        this.raca = animalDto.getRaca();
+        this.statusAdocao = animalDto.getStatusAdocao();
+        this.descricao = animalDto.getDescricao();
     }
     
 }
