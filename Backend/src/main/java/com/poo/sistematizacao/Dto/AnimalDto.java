@@ -1,5 +1,9 @@
 package com.poo.sistematizacao.Dto;
 
+import org.springframework.beans.BeanUtils;
+
+import com.poo.sistematizacao.Model.Animal;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,11 +15,16 @@ public class AnimalDto {
 
     // Propriedades
     private Integer idAnimal;
-    private String categoria;
     private String tipo;
+    private String nome;
     private Integer idade;
     private String raca;
     private Boolean statusAdocao;
     private String descricao;
+
+    // Construtor que recebe entidade
+    public AnimalDto(Animal animal) {
+        BeanUtils.copyProperties(animal, this);
+    }
 
 }

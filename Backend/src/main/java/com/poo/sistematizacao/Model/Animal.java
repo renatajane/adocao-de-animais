@@ -27,6 +27,9 @@ public class Animal {
     @Column(name="id_animal")
     private Integer idAnimal;
 
+    @Column(name="nome")
+    private String nome;
+
     @Column(name="tipo")
     private String tipo; //ex: gato, cachorro
 
@@ -48,6 +51,7 @@ public class Animal {
     // Construtor que aceita AnimalDto
     public Animal(AnimalDto animalDto) {
         this.tipo = animalDto.getTipo();
+        this.nome = animalDto.getNome();
         this.idade = animalDto.getIdade();
         this.raca = animalDto.getRaca();
         this.statusAdocao = animalDto.getStatusAdocao();
