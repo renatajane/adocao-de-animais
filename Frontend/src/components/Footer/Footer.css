@@ -1,0 +1,32 @@
+.footer {
+    background-color: #fcfcd7; /* Cor de fundo */
+    padding: 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    position: relative; /* Para posicionamento */
+    bottom: 0; /* Fixa na parte inferior se necessário */
+    width: 100%; /* Largura total */
+}
+
+.footer-content {
+    max-width: 800px; /* Largura máxima do conteúdo */
+    margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+.footer-nav ul {
+    list-style: none; /* Remove marcadores */
+    padding: 0; /* Remove preenchimento */
+}
+
+.footer-nav li {
+    display: inline; /* Exibe itens em linha */
+    margin: 0 15px; /* Espaçamento entre links */
+}
+
+.footer-nav a {
+    text-decoration: none; /* Remove sublinhado */
+    color: #007bff; /* Cor do link */
+}
+
+.footer-nav a:hover {
+    text-decoration: underline; /* Sublinha ao passar o mouse */
+}

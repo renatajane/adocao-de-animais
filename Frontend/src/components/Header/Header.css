@@ -1,0 +1,39 @@
+.header {
+    background-color: #fcfcd7; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Altura do cabeçalho */
+    text-align: center; /* Centraliza o texto e a imagem dentro do cabeçalho */
+}
+
+.header-content {
+    max-width: 500px; /* Largura máxima do conteúdo */
+    margin: 0 auto; /* Centraliza o conteúdo */
+    display: flex; /* Flexbox para alinhar itens */
+    flex-direction: column; /* Alinha itens em coluna */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.logo {
+    width: 150px;  /* Ajuste o tamanho conforme necessário */
+    height: auto;  /* Mantém a proporção da imagem */
+}
+
+.header-nav ul {
+    list-style: none; /* Remove marcadores */
+    padding: 0; /* Remove preenchimento */
+    margin: 0; /* Remove margem */
+}
+
+.header-nav li {
+    display: inline; /* Exibe itens em linha */
+    margin: 0 15px; /* Espaçamento entre links */
+}
+
+.header-nav a {
+    text-decoration: none; /* Remove sublinhado */
+    color: white; /* Cor do link */
+}
+
+.header-nav a:hover {
+    text-decoration: underline; /* Sublinha ao passar o mouse */
+}

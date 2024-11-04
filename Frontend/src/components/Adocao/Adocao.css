@@ -1,0 +1,76 @@
+.adocao-container {
+    text-align: center; /* Centraliza o texto */
+    padding: 20px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo suave */
+}
+
+.gato {
+    width: 150px; /* Tamanho da imagem do gato */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+}
+
+.titulo-adotar {
+    font-size: 2em; /* Tamanho do título */
+    color: #333; /* Cor do texto */
+    margin: 10px 0; /* Margens acima e abaixo do título */
+}
+
+.subtitulo-adotar {
+    font-size: 1.5em; /* Tamanho do subtítulo */
+    color: #555; /* Cor do texto */
+    margin: 10px 0; /* Margens acima e abaixo do subtítulo */
+}
+
+.animais-container {
+    display: flex; /* Usamos flexbox para organizar os cartões de animais */
+    flex-wrap: wrap; /* Permite que os cartões se movam para a próxima linha */
+    justify-content: center; /* Centraliza os cartões horizontalmente */
+    margin-top: 20px; /* Espaçamento acima da lista de animais */
+}
+
+.animal-card {
+    background-color: white; /* Fundo branco para os cartões */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin: 10px; /* Margem entre os cartões */
+    padding: 15px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o conteúdo dentro do cartão */
+    max-width: 200px; /* Largura máxima dos cartões */
+}
+
+.animal-imagem {
+    width: 100%; /* Imagem ocupa toda a largura do cartão */
+    border-radius: 10px; /* Bordas arredondadas na imagem */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+.animal-nome {
+    font-size: 18px; /* Tamanho do nome do animal */
+    margin: 10px 0; /* Margem acima e abaixo do nome */
+}
+
+.animal-tipo {
+    color: #777; /* Cor do tipo do animal */
+    margin: 5px 0; /* Margem acima e abaixo do tipo */
+}
+
+.link-adotar {
+    display: inline-block; /* Torna o link um botão */
+    background-color: #007BFF; /* Azul */
+    color: white; /* Cor do texto do link */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    border-radius: 5px; /* Bordas arredondadas do botão */
+    text-decoration: none; /* Remove sublinhado */
+    transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+.link-adotar:hover {
+    background-color: #0056b3; /* Azul escuro ao passar o mouse */
+}
+
+.mensagem-sem-animais {
+    font-size: 1.2em; /* Tamanho da mensagem sem animais */
+    color: #ff0000; /* Cor vermelha para destacar a mensagem */
+    margin-top: 20px; /* Margem acima da mensagem */
+}

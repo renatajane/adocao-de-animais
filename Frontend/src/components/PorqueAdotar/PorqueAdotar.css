@@ -1,0 +1,49 @@
+.porque-adotar-container {
+    padding: 40px;
+    background-color: #f8f9fa; /* Cor de fundo suave */
+    text-align: center;
+}
+
+.titulo-porque-adotar {
+    font-size: 2.5rem;
+    color: #343a40; /* Cor escura para o título */
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.motivos-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Para responsividade */
+}
+
+.motivo {
+    background-color: #ffffff; /* Fundo branco para cada motivo */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 20px;
+    margin: 15px;
+    width: 250px; /* Largura dos cards */
+    transition: transform 0.2s; /* Efeito de hover */
+}
+
+.motivo:hover {
+    transform: translateY(-5px); /* Leve elevação ao passar o mouse */
+}
+
+.motivo-icon {
+    font-size: 3rem; /* Tamanho do ícone */
+    color: #007bff; /* Cor do ícone */
+    margin-bottom: 10px;
+}
+
+.motivo h2 {
+    font-size: 1.5rem;
+    color: #343a40; /* Cor do texto do título do motivo */
+    margin: 10px 0;
+}
+
+.motivo p {
+    color: #6c757d; /* Cor do texto da descrição */
+    font-size: 1rem;
+}

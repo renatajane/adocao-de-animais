@@ -1,0 +1,51 @@
+.objetivo-container {
+    background-color: #f9f9f9; /* Fundo claro */
+    text-align: center; /* Centraliza o conteúdo */
+    padding: 30px; /* Adiciona espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    margin: 20px; /* Margem externa */
+    max-width: 600px; /* Largura máxima */
+    margin-left: auto; /* Centraliza à esquerda */
+    margin-right: auto; /* Centraliza à direita */
+}
+
+.gato {
+    width: 120px; /* Ajuste o tamanho conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-bottom: 20px; /* Espaçamento abaixo da imagem */
+    border-radius: 10px; /* Bordas arredondadas na imagem */
+}
+
+.titulo-doar, .titulo-adotar {
+    font-size: 28px; /* Tamanho da fonte */
+    color: #67be9b; /* Cor do texto principal */
+    margin: 15px 0; /* Margens em cima e embaixo */
+    font-family: 'Arial', sans-serif; /* Fonte limpa */
+}
+
+.descricao {
+    font-size: 16px; /* Tamanho da fonte */
+    color: #555555; /* Cor do texto secundário */
+    margin: 10px 0; /* Margens em cima e embaixo */
+    line-height: 1.6; /* Altura da linha para melhor legibilidade */
+    max-width: 500px; /* Largura máxima do texto */
+    margin-left: auto; /* Centraliza à esquerda */
+    margin-right: auto; /* Centraliza à direita */
+}
+
+.link-doacao {
+    display: inline-block; /* Torna o link um botão */
+    background-color: #28A745; /* Verde */
+    color: white; /* Cor do texto do link */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    border-radius: 5px; /* Bordas arredondadas do botão */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 16px; /* Tamanho da fonte */
+    margin-top: 20px; /* Espaçamento acima do botão */
+    transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+.link-doacao:hover {
+    background-color: #218838; /* Verde escuro ao passar o mouse */
+}
