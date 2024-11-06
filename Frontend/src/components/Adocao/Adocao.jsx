@@ -1,43 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import gato from '../../assets/gato.png';
-import './Adocao.css'; 
+import semFoto from '../../assets/sem-foto.png';
 
-// Simulação de uma lista de animais disponíveis
-const animaisDisponiveis = [
-    {
-        id: 1,
-        nome: "Rex",
-        tipo: "Cão",
-        idade: "2 anos",
-        raca: "Labrador",
-        status: "Disponível",
-        descricao: "Rex é um labrador amigável e brincalhão, perfeito para famílias.",
-        imagem: gato // Você pode mudar para a imagem específica do animal
-    },
-    {
-        id: 2,
-        nome: "Miau",
-        tipo: "Gato",
-        idade: "1 ano",
-        raca: "Siamês",
-        status: "Em processo de adoção",
-        descricao: "Miau adora ser acariciado e é muito carinhoso.",
-        imagem: gato
-    },
-    {
-        id: 3,
-        nome: "Bunny",
-        tipo: "Coelho",
-        idade: "6 meses",
-        raca: "Mini Coelho",
-        status: "Adotado",
-        descricao: "Bunny é um coelhinho muito doce e adora pular.",
-        imagem: gato
-    },
-    // Adicione mais animais conforme necessário
-];
+import './Adocao.css';
 
 function Adocao() {
+    // Estado para armazenar a lista de animais
+    const [animais, setAnimais] = useState([]);
+    const [erro, setErro] = useState(null);
+
+    // Função para buscar os animais do backend
+    const fetchAnimais = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/animal/list');
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            const data = await response.json();
+            setAnimais(data); // Atualiza o estado com os dados dos animais
+        } catch (error) {
+            setErro('Erro ao buscar dados: ' + error.message);
+            console.error('Erro ao buscar dados:', error);
+        }
+    };
+
+    // useEffect para chamar a função fetchAnimais quando o componente for montado
+    useEffect(() => {
+        fetchAnimais();
+    }, []);
+
     return (
         <div className="adocao-container">
             <img src={gato} alt="Gato" className="gato" />
@@ -45,17 +36,24 @@ function Adocao() {
             <h2 className="subtitulo-adotar">Estamos muito felizes com sua escolha!</h2>
 
             <div className="animais-container">
-                {animaisDisponiveis.length > 0 ? (
-                    animaisDisponiveis.map(animal => (
-                        <div key={animal.id} className="animal-card">
-                            <img src={animal.imagem} alt={animal.nome} className="animal-imagem" />
+                {erro && <p className="erro">{erro}</p>}
+
+                {animais.length > 0 ? (
+                    animais.map(animal => (
+                        <div key={animal.idAnimal} className="animal-card">
+                            {/* Verifica se a imagem está disponível; caso contrário, usa a URL da API ou imagem padrão */}
+                            <img 
+                                src={animal.imagem ? `http://localhost:8080/api/animal/image/${animal.idAnimal}` : semFoto} 
+                                alt={animal.nome} 
+                                className="animal-imagem" 
+                            />
                             <h3 className="animal-nome">{animal.nome}</h3>
                             <p className="animal-tipo">Tipo: {animal.tipo}</p>
                             <p className="animal-idade">Idade: {animal.idade}</p>
                             <p className="animal-raca">Raça: {animal.raca}</p>
                             <p className="animal-status">Status de Adoção: {animal.status}</p>
                             <p className="animal-descricao">{animal.descricao}</p>
-                            <a href={`/adocao/${animal.id}`} className="link-adotar">Adotar</a>
+                            <a href={`/adocao/${animal.idAnimal}`} className="link-adotar">Adotar</a>
                         </div>
                     ))
                 ) : (

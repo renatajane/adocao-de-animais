@@ -1,5 +1,6 @@
 package com.poo.sistematizacao.Service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,12 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poo.sistematizacao.Dto.AnimalDto;
+import com.poo.sistematizacao.Dto.AnimalDtoRead;
 import com.poo.sistematizacao.Model.Animal;
 import com.poo.sistematizacao.Repository.AnimalRepository;
 
@@ -33,9 +37,9 @@ public class AnimalService {
     }
 
     // Busca todos os animais
-    public List<AnimalDto> list() {
+    public List<AnimalDtoRead> list() {
         List<Animal> listaAnimais = repository.findAll();
-        return listaAnimais.stream().map(AnimalDto::new).toList();
+        return listaAnimais.stream().map(AnimalDtoRead::new).toList();
     }
 
     // Busca animais por tipo
@@ -77,28 +81,51 @@ public class AnimalService {
         }
     }
 
-    // Imagem do animal
-    public ResponseEntity<String> uploadImage(MultipartFile file) {
-        try {
-            // Verifica se o diretório existe, se não existir, é criado
-            Path directoryPath = Paths.get(uploadDir);
-            if (!Files.exists(directoryPath)) {
-                Files.createDirectories(directoryPath);
+    // Upload de imagem do animal
+    public ResponseEntity<String> uploadImage(Integer animalId, MultipartFile file) {
+        Optional<Animal> optionalAnimal = repository.findById(animalId);
+    
+        if (optionalAnimal.isPresent()) {
+            Animal animal = optionalAnimal.get();
+            try {
+                // Verifica se o diretório existe, se não existir, é criado
+                Path directoryPath = Paths.get(uploadDir);
+                if (!Files.exists(directoryPath)) {
+                    Files.createDirectories(directoryPath);
+                }
+    
+                // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
+                String fileName = animalId + "_" + file.getOriginalFilename(); // Inclui o ID do animal no nome
+                Path filePath = directoryPath.resolve(fileName);
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+    
+                // Cria a URL para acessar a imagem, com base no ID do animal
+                String imageUrl = "http://localhost:8080/uploads/" + fileName;
+                animal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
+    
+                // Salva a URL no banco de dados
+                repository.save(animal);
+    
+                return ResponseEntity.ok(imageUrl); // Retorna o URL da imagem
+    
+            } catch (IOException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao fazer upload");
             }
-
-            // Salva o arquivo no diretório
-            String fileName = file.getOriginalFilename();
-            Path filePath = directoryPath.resolve(fileName);
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            // URL pública
-            String imageUrl = "http://localhost:8080/uploads/" + fileName;
-            return ResponseEntity.ok(imageUrl); // Retorna o URL da imagem
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao fazer upload");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal não encontrado.");
         }
+    }    
+
+    // Método para recuperar a imagem
+    public Resource getImage(Integer id) {
+        String fileName = id + ".jpg"; // Ou use o nome original, conforme o seu armazenamento
+        File file = new File(uploadDir, fileName);
+
+        if (file.exists()) {
+            return new FileSystemResource(file); // Retorna o arquivo como recurso
+        }
+        return null; // Retorna null caso o arquivo não exista
     }
 
     // Remove animal

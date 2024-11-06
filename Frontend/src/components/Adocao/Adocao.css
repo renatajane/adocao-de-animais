@@ -40,9 +40,10 @@
 }
 
 .animal-imagem {
-    width: 100%; /* Imagem ocupa toda a largura do cartão */
-    border-radius: 10px; /* Bordas arredondadas na imagem */
-    height: auto; /* Mantém a proporção da imagem */
+    width: 150px;  /* Define a largura da imagem */
+    height: 150px; /* Define a altura da imagem */
+    object-fit: cover; /* Faz com que a imagem se ajuste dentro do contêiner sem distorcer */
+    border-radius: 8px; /* Se você quiser bordas arredondadas */
 }
 
 .animal-nome {
