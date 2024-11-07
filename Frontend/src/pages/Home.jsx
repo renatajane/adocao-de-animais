@@ -81,6 +81,11 @@ function Home() {
         navigate('/formulario-doacao');
     };
 
+    // Função para navegar até a página de edição do animal
+    const handleEditar = (animal) => {
+        navigate('/formulario-edicao', { state: { animal } });
+    };
+
     return (
         <div>
             {/* Porque Adotar */}
@@ -161,6 +166,9 @@ function Home() {
                                 </button>
                                 <button onClick={() => handleDeletar(animal.idAnimal)} className="link-deletar">
                                     Deletar
+                                </button>
+                                <button onClick={() => handleEditar(animal)} className="link-editar">
+                                    Editar
                                 </button>
                             </div>
                         ))

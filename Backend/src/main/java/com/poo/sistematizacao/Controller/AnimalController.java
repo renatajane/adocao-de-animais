@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,6 +35,7 @@ import com.poo.sistematizacao.service.AnimalService;
 
 @RestController
 @RequestMapping("/api/animal")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AnimalController {
 
     @Autowired
@@ -86,7 +88,7 @@ public class AnimalController {
     public ResponseEntity<AnimalDto> updateStatusAdocao(@PathVariable Integer id, @RequestParam StatusAdocao status) {
         return service.updateStatusAdocao(id, status);  // Chama o serviço para atualizar o status
     }
-    
+
     // Post para inserir imagem
     @PostMapping("/{id}/upload")
     public ResponseEntity<String> uploadImage(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {

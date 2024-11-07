@@ -91,24 +91,30 @@ public class AnimalService {
         return listaAnimaisTipo.stream().map(AnimalDtoRead::new).toList();
     }
 
-    // Edita informações de um animal
+    // Atualiza informações de um animal
     public ResponseEntity<AnimalDto> update(Integer id, AnimalDto animalDto) {
         Optional<Animal> optionalAnimal = repository.findById(id);
-
+    
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
+            
+            // Atualizando os dados do animal, exceto a imagem
             animal.setNome(animalDto.getNome());
             animal.setTipo(animalDto.getTipo());
             animal.setIdade(animalDto.getIdade());
             animal.setRaca(animalDto.getRaca());
             animal.setStatusAdocao(animalDto.getStatusAdocao());
             animal.setDescricao(animalDto.getDescricao());
+    
+            // Salvando o animal atualizado
             Animal updatedAnimal = repository.save(animal);
+    
             return ResponseEntity.ok(new AnimalDto(updatedAnimal));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    
 
     // Edita apenas o status de adoção do animal
      public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
