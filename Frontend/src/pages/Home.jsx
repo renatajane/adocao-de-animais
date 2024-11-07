@@ -1,21 +1,27 @@
 import { FaPaw, FaHeart, FaHome, FaSmile } from 'react-icons/fa'; // Ícones da biblioteca react-icons
 import React, { useEffect, useState } from 'react';
-import gato from '../assets/gato.png'
-import semFoto from '../assets/sem-foto.png';
-import '../styles/PorqueAdotar.css'
-import '../styles/Adocao.css';
-import '../styles/Doacao.css';
+import gato from '../assets/gato.png';
+import semFoto from '../assets/nao-tem-foto.png';
+import adocao from '../assets/img-adocao.jpg';
+import './Home.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
-    // Estado para armazenar a lista de animais
+    // Estado para armazenar a lista de animais e o tipo selecionado
     const [animais, setAnimais] = useState([]);
     const [erro, setErro] = useState(null);
+    const [tipo, setTipo] = useState(''); // Estado para o tipo de animal
+    const tiposAnimais = ['Cachorro', 'Gato', 'Pássaro']; // Tipos de animais
 
     // Função para buscar os animais do backend
-    const fetchAnimais = async () => {
+    const fetchAnimais = async (tipo) => {
+        let url = 'http://localhost:8080/api/animal/list';
+        if (tipo) {
+            url = `http://localhost:8080/api/animal/list-tipo?tipo=${tipo}`;
+        }
+
         try {
-            const response = await fetch('http://localhost:8080/api/animal/list');
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('Erro na requisição');
             }
@@ -29,8 +35,8 @@ function Home() {
 
     // useEffect para chamar a função fetchAnimais quando o componente for montado
     useEffect(() => {
-        fetchAnimais();
-    }, []);
+        fetchAnimais(tipo);
+    }, [tipo]); // Dependência no estado tipo
 
     const navigate = useNavigate();
 
@@ -69,9 +75,25 @@ function Home() {
 
             {/* Adoção */}
             <div className="adocao-container">
-                <img src={gato} alt="Gato" className="gato" />
+                <img src={adocao} alt="Adocao" className="img-adocao" />
                 <h1 className="titulo-adotar">Está pronto para adotar?</h1>
-                <h2 className="subtitulo-adotar">Estamos muito felizes com sua escolha!</h2>
+                <h2 className="subtitulo-adotar">
+                    Estamos muito felizes com sua escolha!
+                </h2>
+
+                {/* Filtro de tipo */}
+                <div className="filtro-tipo-container">
+                    <select 
+                        className="filtro-tipo-select" 
+                        value={tipo} 
+                        onChange={(e) => setTipo(e.target.value)}
+                    >
+                        <option value="">Todos</option>
+                        {tiposAnimais.map((t, index) => (
+                            <option key={index} value={t}>{t}</option>
+                        ))}
+                    </select>
+                </div>
 
                 <div className="animais-container">
                     {erro && <p className="erro">{erro}</p>}
@@ -79,10 +101,10 @@ function Home() {
                     {animais.length > 0 ? (
                         animais.map(animal => (
                             <div key={animal.idAnimal} className="animal-card">
-                                <img 
-                                    src={animal.imagem ? `http://localhost:8080/api/animal/image/${animal.idAnimal}` : semFoto} 
-                                    alt={animal.nome} 
-                                    className="animal-imagem" 
+                                <img
+                                    src={animal.imagem ? `http://localhost:8080/api/animal/image/${animal.idAnimal}` : semFoto}
+                                    alt={animal.nome}
+                                    className="animal-imagem"
                                 />
                                 <h3 className="animal-nome">{animal.nome}</h3>
                                 <p className="animal-tipo">Tipo: {animal.tipo}</p>

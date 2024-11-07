@@ -23,53 +23,35 @@ function FormularioDoacao() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Primeiro, cria o animal (POST)
-        const animalData = {
-            nome: animal.nome,
-            tipo: animal.tipo,
-            idade: animal.idade,
-            raca: animal.raca,
-            statusAdocao: animal.statusAdocao,
-            descricao: animal.descricao,
-        };
-
+    
+        const formData = new FormData();
+        formData.append('nome', animal.nome);
+        formData.append('tipo', animal.tipo);
+        formData.append('idade', animal.idade);
+        formData.append('raca', animal.raca);
+        formData.append('statusAdocao', animal.statusAdocao);
+        formData.append('descricao', animal.descricao);
+        formData.append('file', animal.imagem);  // Adiciona o arquivo da imagem
+    
         try {
-            const response = await fetch('http://localhost:8080/api/animal', {
+            const response = await fetch('http://localhost:8080/api/animal/createWithImage', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(animalData),
+                body: formData, // Envia tudo no mesmo formData
             });
-
+    
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar animal');
             }
-
+    
             const data = await response.json();
-            console.log("ESSES SAO OS MEUS DADOS????"+ data);
-            const animalId = data.id; // Supondo que o ID do animal é retornado após a criação
-
-            // Agora, envia a imagem (POST para /upload)
-            const formData = new FormData();
-            formData.append('file', animal.imagem);
-
-            const imageResponse = await fetch(`http://localhost:8080/api/animal/${animalId}/upload`, {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (imageResponse.ok) {
-                alert('Animal cadastrado e imagem enviada com sucesso!');
-            } else {
-                alert('Erro ao enviar imagem');
-            }
+            console.log("Dados recebidos: ", data);
+            alert('Animal cadastrado com sucesso!');
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
             alert('Erro ao enviar dados');
         }
     };
+    
 
     return (
         <div className="form-container">

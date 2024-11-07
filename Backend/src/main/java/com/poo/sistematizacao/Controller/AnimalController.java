@@ -47,6 +47,21 @@ public class AnimalController {
         service.create(animalDto);
     }
 
+    @PostMapping("/createWithImage")
+    public ResponseEntity<AnimalDto> createWithImage(
+        @RequestParam("nome") String nome,
+        @RequestParam("tipo") String tipo,
+        @RequestParam("idade") Integer idade,
+        @RequestParam("raca") String raca,
+        @RequestParam("statusAdocao") Boolean statusAdocao,
+        @RequestParam("descricao") String descricao,
+        @RequestParam("file") MultipartFile file) {
+        // Criando o DTO do Animal com os dados recebidos, sem o idAnimal
+        AnimalDto animalDto = new AnimalDto(nome, tipo, idade, raca, statusAdocao, descricao);
+        return service.createWithImage(animalDto, file);
+    }
+    
+
     // Lista todos os animais
     @GetMapping("/list")
     public List<AnimalDtoRead> list() {
@@ -55,7 +70,7 @@ public class AnimalController {
 
     // Lista animais por tipo
     @GetMapping("/list-tipo")
-    public List<AnimalDto> listTipo(@RequestParam String tipo) {
+    public List<AnimalDtoRead> listTipo(@RequestParam String tipo) {
         return service.listType(tipo);
     }
 

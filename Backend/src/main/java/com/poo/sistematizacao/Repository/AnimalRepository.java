@@ -13,7 +13,7 @@ import com.poo.sistematizacao.model.Animal;
 public interface AnimalRepository extends JpaRepository<Animal, Integer> {
 
     // Busca animais por tipo
-    @Query("SELECT a FROM Animal a WHERE a.tipo = tipo")
+    @Query("SELECT a FROM Animal a WHERE LOWER(a.tipo) = LOWER(:tipo)")
     List<Animal> findByTipo(@Param("tipo") String tipo);
 
 }

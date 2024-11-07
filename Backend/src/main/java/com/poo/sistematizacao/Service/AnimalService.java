@@ -36,6 +36,46 @@ public class AnimalService {
         repository.save(animal);
     }
 
+    public ResponseEntity<AnimalDto> createWithImage(AnimalDto animalDto, MultipartFile file) {
+        try {
+            // Cria o objeto Animal a partir do AnimalDto
+            Animal animal = new Animal(animalDto);
+    
+            // Salva o animal no banco de dados
+            Animal savedAnimal = repository.save(animal);
+    
+            // Verifica se a imagem foi recebida
+            if (file != null && !file.isEmpty()) {
+                // Realiza o upload da imagem para o animal recém-criado
+                Path directoryPath = Paths.get(uploadDir);
+                if (!Files.exists(directoryPath)) {
+                    Files.createDirectories(directoryPath);
+                }
+    
+                // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
+                String fileName = savedAnimal.getIdAnimal() + "_" + file.getOriginalFilename(); // Inclui o ID do animal no nome
+                Path filePath = directoryPath.resolve(fileName);
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+    
+                // Cria a URL para acessar a imagem, com base no ID do animal
+                String imageUrl = "http://localhost:8080/uploads/" + fileName;
+                savedAnimal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
+    
+                // Salva novamente o animal com a URL da imagem
+                savedAnimal = repository.save(savedAnimal);
+            }
+    
+            // Retorna o animal recém-criado com a imagem associada
+            return ResponseEntity.ok(new AnimalDto(savedAnimal));
+    
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
+    
+
     // Busca todos os animais
     public List<AnimalDtoRead> list() {
         List<Animal> listaAnimais = repository.findAll();
@@ -43,9 +83,9 @@ public class AnimalService {
     }
 
     // Busca animais por tipo
-    public List<AnimalDto> listType(String tipo) {
+    public List<AnimalDtoRead> listType(String tipo) {
         List<Animal> listaAnimaisTipo = repository.findByTipo(tipo);
-        return listaAnimaisTipo.stream().map(AnimalDto::new).toList();
+        return listaAnimaisTipo.stream().map(AnimalDtoRead::new).toList();
     }
 
     // Edita informações de um animal
