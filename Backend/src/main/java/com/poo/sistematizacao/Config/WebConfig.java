@@ -1,4 +1,4 @@
-package com.poo.sistematizacao.Config;
+package com.poo.sistematizacao.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

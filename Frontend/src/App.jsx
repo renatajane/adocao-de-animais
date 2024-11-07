@@ -1,25 +1,26 @@
-import { useState } from 'react'
-import Adocao from './components/Adocao/Adocao'
-import Doacao from './components/Doacao/Doacao'
-import Footer from "./components/Footer/Footer"
-import Header from "./components/Header/Header"
-import PorqueAdotar from './components/PorqueAdotar/PorqueAdotar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Home from './pages/Home'
+import FormularioDoacao from './pages/FormularioDoacao';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
-    <Header />
+      {/* O Header aparece em todas as páginas */}
+      <Header />
+      
       <div>
-        <PorqueAdotar/>
-        <Adocao/>
-        <Doacao/>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/formulario-doacao" element={<FormularioDoacao />} />
+        </Routes>
       </div>
+      
+      {/* O Footer aparece em todas as páginas */}
       <Footer />
-      </BrowserRouter>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

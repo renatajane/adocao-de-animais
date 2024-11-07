@@ -1,4 +1,4 @@
-package com.poo.sistematizacao.Repository;
+package com.poo.sistematizacao.repository;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.poo.sistematizacao.Model.Animal;
+import com.poo.sistematizacao.model.Animal;
 
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Integer> {

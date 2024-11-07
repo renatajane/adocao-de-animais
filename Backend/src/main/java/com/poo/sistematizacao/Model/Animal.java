@@ -1,6 +1,6 @@
-package com.poo.sistematizacao.Model;
+package com.poo.sistematizacao.model;
 
-import com.poo.sistematizacao.Dto.AnimalDto;
+import com.poo.sistematizacao.dto.AnimalDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,8 +1,8 @@
-package com.poo.sistematizacao.Dto;
+package com.poo.sistematizacao.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import com.poo.sistematizacao.Model.Animal;
+import com.poo.sistematizacao.model.Animal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

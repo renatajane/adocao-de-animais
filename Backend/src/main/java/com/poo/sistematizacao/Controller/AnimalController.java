@@ -1,4 +1,4 @@
-package com.poo.sistematizacao.Controller;
+package com.poo.sistematizacao.controller;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.poo.sistematizacao.Dto.AnimalDto;
-import com.poo.sistematizacao.Dto.AnimalDtoRead;
-import com.poo.sistematizacao.Model.Animal;
-import com.poo.sistematizacao.Repository.AnimalRepository;
-import com.poo.sistematizacao.Service.AnimalService;
+import com.poo.sistematizacao.dto.AnimalDto;
+import com.poo.sistematizacao.dto.AnimalDtoRead;
+import com.poo.sistematizacao.model.Animal;
+import com.poo.sistematizacao.repository.AnimalRepository;
+import com.poo.sistematizacao.service.AnimalService;
 
 @RestController
 @RequestMapping("/api/animal")
