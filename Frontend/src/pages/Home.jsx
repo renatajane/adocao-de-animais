@@ -35,7 +35,6 @@ function Home() {
     const navigate = useNavigate();
 
     const handleClickDoacao = () => {
-        console.log('Botão de doação clicado!');
         navigate('/formulario-doacao');
     };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/FormularioDoacao.css';
 
 function FormularioDoacao() {
     const [animal, setAnimal] = useState({
@@ -23,28 +24,46 @@ function FormularioDoacao() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // FormData para enviar o arquivo de imagem
-        const formData = new FormData();
-        formData.append('file', animal.imagem);
-        formData.append('animal', JSON.stringify({
+        // Primeiro, cria o animal (POST)
+        const animalData = {
             nome: animal.nome,
             tipo: animal.tipo,
             idade: animal.idade,
             raca: animal.raca,
             statusAdocao: animal.statusAdocao,
             descricao: animal.descricao,
-        }));
+        };
 
         try {
             const response = await fetch('http://localhost:8080/api/animal', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(animalData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao cadastrar animal');
+            }
+
+            const data = await response.json();
+            console.log("ESSES SAO OS MEUS DADOS????"+ data);
+            const animalId = data.id; // Supondo que o ID do animal é retornado após a criação
+
+            // Agora, envia a imagem (POST para /upload)
+            const formData = new FormData();
+            formData.append('file', animal.imagem);
+
+            const imageResponse = await fetch(`http://localhost:8080/api/animal/${animalId}/upload`, {
+                method: 'POST',
                 body: formData,
             });
 
-            if (response.ok) {
-                alert('Animal cadastrado com sucesso!');
+            if (imageResponse.ok) {
+                alert('Animal cadastrado e imagem enviada com sucesso!');
             } else {
-                alert('Erro ao cadastrar animal');
+                alert('Erro ao enviar imagem');
             }
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
