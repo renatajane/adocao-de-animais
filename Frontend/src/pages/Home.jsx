@@ -40,6 +40,43 @@ function Home() {
 
     const navigate = useNavigate();
 
+    // Função para atualizar o status de adoção do animal para "ADOTADO"
+    const handleAdotar = async (idAnimal) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/animal/${idAnimal}/status?status=ADOTADO`, {
+                method: 'PATCH',
+            });
+            if (!response.ok) {
+                throw new Error('Erro ao atualizar status');
+            }
+            fetchAnimais(tipo); // Atualiza a lista de animais após a alteração
+            alert('Parabéns! Você adotou um animal!');
+        } catch (error) {
+            console.error('Erro ao adotar o animal:', error);
+            alert('Erro ao adotar o animal.');
+        }
+    };
+
+    // Função para deletar o animal
+    const handleDeletar = async (idAnimal) => {
+        const confirmDelete = window.confirm('Tem certeza que deseja excluir este animal?');
+        if (confirmDelete) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/animal/${idAnimal}`, {
+                    method: 'DELETE',
+                });
+                if (!response.ok) {
+                    throw new Error('Erro ao deletar animal');
+                }
+                fetchAnimais(tipo); // Atualiza a lista de animais após a exclusão
+                alert('Animal deletado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao deletar animal:', error);
+                alert('Erro ao deletar animal.');
+            }
+        }
+    };
+
     const handleClickDoacao = () => {
         navigate('/formulario-doacao');
     };
@@ -119,7 +156,12 @@ function Home() {
                                     }
                                 </p>
                                 <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
-                                <a href={`/adocao/${animal.idAnimal}`} className="link-adotar">Adotar</a>
+                                <button onClick={() => handleAdotar(animal.idAnimal)} className="link-adotar">
+                                    Adotar
+                                </button>
+                                <button onClick={() => handleDeletar(animal.idAnimal)} className="link-deletar">
+                                    Deletar
+                                </button>
                             </div>
                         ))
                     ) : (

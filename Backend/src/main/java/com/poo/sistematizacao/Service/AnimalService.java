@@ -77,9 +77,7 @@ public class AnimalService {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-    }
-    
-    
+    }    
 
     // Busca todos os animais
     public List<AnimalDtoRead> list() {
@@ -113,16 +111,16 @@ public class AnimalService {
     }
 
     // Edita apenas o status de adoção do animal
-    public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
+     public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
         Optional<Animal> optionalAnimal = repository.findById(id);
 
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
-            animal.setStatusAdocao(statusAdocao);
-            Animal updatedAnimal = repository.save(animal);
-            return ResponseEntity.ok(new AnimalDto(updatedAnimal));
+            animal.setStatusAdocao(statusAdocao);  // Atualizando o status de adoção
+            Animal updatedAnimal = repository.save(animal);  // Salvando o animal com o novo status
+            return ResponseEntity.ok(new AnimalDto(updatedAnimal));  // Retornando o AnimalDto atualizado
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Caso o animal não seja encontrado
         }
     }
 

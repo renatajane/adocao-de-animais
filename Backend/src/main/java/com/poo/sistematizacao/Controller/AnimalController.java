@@ -48,6 +48,7 @@ public class AnimalController {
         service.create(animalDto);
     }
 
+    // Cria animal já com a imagem
     @PostMapping("/createWithImage")
     public ResponseEntity<AnimalDto> createWithImage(
         @RequestParam("nome") String nome,
@@ -83,9 +84,9 @@ public class AnimalController {
     // Edita apenas o status de adoção do animal
     @PatchMapping("/{id}/status")
     public ResponseEntity<AnimalDto> updateStatusAdocao(@PathVariable Integer id, @RequestParam StatusAdocao status) {
-        return service.updateStatusAdocao(id, status);
+        return service.updateStatusAdocao(id, status);  // Chama o serviço para atualizar o status
     }
-
+    
     // Post para inserir imagem
     @PostMapping("/{id}/upload")
     public ResponseEntity<String> uploadImage(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
