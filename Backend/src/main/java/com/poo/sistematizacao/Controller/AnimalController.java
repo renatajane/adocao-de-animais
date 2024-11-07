@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.poo.sistematizacao.dto.AnimalDto;
 import com.poo.sistematizacao.dto.AnimalDtoRead;
 import com.poo.sistematizacao.model.Animal;
+import com.poo.sistematizacao.model.StatusAdocao;
 import com.poo.sistematizacao.repository.AnimalRepository;
 import com.poo.sistematizacao.service.AnimalService;
 
@@ -53,11 +54,10 @@ public class AnimalController {
         @RequestParam("tipo") String tipo,
         @RequestParam("idade") Integer idade,
         @RequestParam("raca") String raca,
-        @RequestParam("statusAdocao") Boolean statusAdocao,
         @RequestParam("descricao") String descricao,
         @RequestParam("file") MultipartFile file) {
         // Criando o DTO do Animal com os dados recebidos, sem o idAnimal
-        AnimalDto animalDto = new AnimalDto(nome, tipo, idade, raca, statusAdocao, descricao);
+        AnimalDto animalDto = new AnimalDto(nome, tipo, idade, raca, descricao);
         return service.createWithImage(animalDto, file);
     }
     
@@ -82,7 +82,7 @@ public class AnimalController {
 
     // Edita apenas o status de adoção do animal
     @PatchMapping("/{id}/status")
-    public ResponseEntity<AnimalDto> updateStatusAdocao(@PathVariable Integer id, @RequestParam Boolean status) {
+    public ResponseEntity<AnimalDto> updateStatusAdocao(@PathVariable Integer id, @RequestParam StatusAdocao status) {
         return service.updateStatusAdocao(id, status);
     }
 

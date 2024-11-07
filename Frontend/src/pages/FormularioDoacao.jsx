@@ -51,7 +51,6 @@ function FormularioDoacao() {
             alert('Erro ao enviar dados');
         }
     };
-    
 
     return (
         <div className="form-container">
@@ -73,10 +72,15 @@ function FormularioDoacao() {
                     <label>Raça:</label>
                     <input type="text" name="raca" value={animal.raca} onChange={handleChange} required />
                 </div>
-                <div>
+                {/* <div>
                     <label>Status de Adoção:</label>
-                    <input type="text" name="statusAdocao" value={animal.statusAdocao} onChange={handleChange} required />
-                </div>
+                    <select name="statusAdocao" value={animal.statusAdocao} onChange={handleChange} required>
+                        <option value="">Selecione o status</option>
+                        <option value="DISPONIVEL">Disponível</option>
+                        <option value="EM_PROCESSO_ADOCAO">Em processo de adoção</option>
+                        <option value="ADOTADO">Adotado</option>
+                    </select>
+                </div> */}
                 <div>
                     <label>Descrição:</label>
                     <textarea name="descricao" value={animal.descricao} onChange={handleChange} required />

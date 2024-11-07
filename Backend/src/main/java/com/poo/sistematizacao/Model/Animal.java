@@ -4,6 +4,8 @@ import com.poo.sistematizacao.dto.AnimalDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,8 +41,9 @@ public class Animal {
     @Column(name="raca")
     private String raca;
 
+    @Enumerated(EnumType.STRING)  
     @Column(name="status_adocao")
-    private Boolean statusAdocao;
+    private StatusAdocao statusAdocao;
 
     @Column(name="imagem")
     private String imagem;

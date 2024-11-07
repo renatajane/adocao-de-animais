@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.poo.sistematizacao.dto.AnimalDto;
 import com.poo.sistematizacao.dto.AnimalDtoRead;
 import com.poo.sistematizacao.model.Animal;
+import com.poo.sistematizacao.model.StatusAdocao;
 import com.poo.sistematizacao.repository.AnimalRepository;
 
 @Service
@@ -36,10 +37,14 @@ public class AnimalService {
         repository.save(animal);
     }
 
+    // Cria animal com a imagem
     public ResponseEntity<AnimalDto> createWithImage(AnimalDto animalDto, MultipartFile file) {
         try {
             // Cria o objeto Animal a partir do AnimalDto
             Animal animal = new Animal(animalDto);
+
+            animalDto.getStatusAdocao();
+            animal.setStatusAdocao(StatusAdocao.DISPONIVEL);
     
             // Salva o animal no banco de dados
             Animal savedAnimal = repository.save(animal);
@@ -108,7 +113,7 @@ public class AnimalService {
     }
 
     // Edita apenas o status de adoção do animal
-    public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, Boolean statusAdocao) {
+    public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
         Optional<Animal> optionalAnimal = repository.findById(id);
 
         if (optionalAnimal.isPresent()) {

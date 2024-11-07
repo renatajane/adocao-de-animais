@@ -3,6 +3,7 @@ package com.poo.sistematizacao.dto;
 import org.springframework.beans.BeanUtils;
 
 import com.poo.sistematizacao.model.Animal;
+import com.poo.sistematizacao.model.StatusAdocao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class AnimalDtoRead {
     private String nome;
     private Integer idade;
     private String raca;
-    private Boolean statusAdocao;
+    private StatusAdocao statusAdocao;
     private String descricao;
     private String imagem;
 

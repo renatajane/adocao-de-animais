@@ -3,6 +3,7 @@ package com.poo.sistematizacao.dto;
 import org.springframework.beans.BeanUtils;
 
 import com.poo.sistematizacao.model.Animal;
+import com.poo.sistematizacao.model.StatusAdocao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,16 +19,15 @@ public class AnimalDto {
     private String nome;
     private Integer idade;
     private String raca;
-    private Boolean statusAdocao;
+    private StatusAdocao statusAdocao;
     private String descricao;
 
     // Construtor sem o idAnimal para criação
-    public AnimalDto(String nome, String tipo, Integer idade, String raca, Boolean statusAdocao, String descricao) {
+    public AnimalDto(String nome, String tipo, Integer idade, String raca, String descricao) {
         this.nome = nome;
         this.tipo = tipo;
         this.idade = idade;
         this.raca = raca;
-        this.statusAdocao = statusAdocao;
         this.descricao = descricao;
     }
 

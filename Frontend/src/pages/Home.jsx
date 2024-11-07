@@ -83,9 +83,9 @@ function Home() {
 
                 {/* Filtro de tipo */}
                 <div className="filtro-tipo-container">
-                    <select 
-                        className="filtro-tipo-select" 
-                        value={tipo} 
+                    <select
+                        className="filtro-tipo-select"
+                        value={tipo}
                         onChange={(e) => setTipo(e.target.value)}
                     >
                         <option value="">Todos</option>
@@ -107,11 +107,18 @@ function Home() {
                                     className="animal-imagem"
                                 />
                                 <h3 className="animal-nome">{animal.nome}</h3>
-                                <p className="animal-tipo">Tipo: {animal.tipo}</p>
-                                <p className="animal-idade">Idade: {animal.idade}</p>
-                                <p className="animal-raca">Raça: {animal.raca}</p>
-                                <p className="animal-status">Status de Adoção: {animal.status}</p>
-                                <p className="animal-descricao">{animal.descricao}</p>
+                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
+                                <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
+                                <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
+                                <p className="animal-status">
+                                    <strong>Status de Adoção:</strong> {
+                                        animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
+                                            animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
+                                                animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
+                                                    'Status desconhecido'
+                                    }
+                                </p>
+                                <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
                                 <a href={`/adocao/${animal.idAnimal}`} className="link-adotar">Adotar</a>
                             </div>
                         ))
