@@ -19,5 +19,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/uploads/**")
                 .addResourceLocations("file:uploads/"); // Caminho para a pasta onde as imagens são armazenadas
     }
-
 }
