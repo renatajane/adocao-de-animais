@@ -76,7 +76,10 @@ function FormularioCadastro() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
-                    <input type="text" name="nome" value={animal.nome} onChange={handleChange} required />
+                    <input type="text" name="nome" 
+                      pattern="^[A-Za-z\s]+$" minLength="2" 
+                      title="O nome deve conter apenas letras e no mínimo 2 caracteres."
+                      value={animal.nome} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Tipo:</label>
@@ -84,7 +87,7 @@ function FormularioCadastro() {
                         <option value="">Selecione um tipo</option>
                         <option value="CACHORRO">Cachorro</option>
                         <option value="GATO">Gato</option>
-                        <option value="PASSARO">Pássaro</option>
+                        <option value="COELHO">Coelho</option>
                     </select>
                 </div>
                 <div>
@@ -112,7 +115,7 @@ function FormularioCadastro() {
                 </div>
             )}
 
-            <button className="voltar-button" onClick={handleVoltar}>Voltar para Home</button>
+            <button className="voltar-button" onClick={handleVoltar}>Voltar</button>
         </div>
     );
 }

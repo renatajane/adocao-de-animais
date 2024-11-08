@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/FormularioCadastro.css';
 
 function FormularioEdicao() {
     const location = useLocation(); // Pega o estado da navegação
+    const navigate = useNavigate();
+    const [mensagem, setMensagem] = useState(null);
     const [animal, setAnimal] = useState({
         nome: '',
         tipo: '',
@@ -23,6 +25,10 @@ function FormularioEdicao() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setAnimal({ ...animal, [name]: value });
+    };
+
+    const handleVoltar = () => {
+        navigate('/');  // Redireciona para a tela de home
     };
 
     const handleSubmit = async (e) => {
@@ -53,7 +59,18 @@ function FormularioEdicao() {
 
             const data = await response.json();
             console.log("Dados recebidos: ", data);
-            alert('Animal editado com sucesso!');
+            setMensagem({ tipo: 'success', texto: 'Animal editado com sucesso!' });
+
+            // Limpar os campos após sucesso
+            setAnimal({
+                nome: '',
+                tipo: '',
+                idade: '',
+                raca: '',
+                statusAdocao: '',
+                descricao: ''
+            });
+
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
             alert('Erro ao editar animal');
@@ -66,11 +83,19 @@ function FormularioEdicao() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
-                    <input type="text" name="nome" value={animal.nome} onChange={handleChange} required />
+                    <input type="text" name="nome"
+                        pattern="^[A-Za-z\s]+$" minLength="2"
+                        title="O nome deve conter apenas letras e no mínimo 2 caracteres."
+                        value={animal.nome} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Tipo:</label>
-                    <input type="text" name="tipo" value={animal.tipo} onChange={handleChange} required />
+                    <select name="tipo" value={animal.tipo} onChange={handleChange} required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="CACHORRO">Cachorro</option>
+                        <option value="GATO">Gato</option>
+                        <option value="COELHO">Coelho</option>
+                    </select>
                 </div>
                 <div>
                     <label>Idade:</label>
@@ -92,9 +117,17 @@ function FormularioEdicao() {
                 <div>
                     <label>Descrição:</label>
                     <textarea name="descricao" value={animal.descricao} onChange={handleChange} required />
-                </div>                
+                </div>
                 <button type="submit">Editar Animal</button>
             </form>
+
+            {mensagem && (
+                <div className={`mensagem ${mensagem.tipo === 'success' ? 'success' : 'error'}`}>
+                    {mensagem.texto}
+                </div>
+            )}
+
+            <button className="voltar-button" onClick={handleVoltar}>Voltar</button>
         </div>
     );
 }

@@ -1,17 +1,3 @@
-/* Reseta alguns estilos padrões */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Corpo principal */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
-}
-
 /* Container de Por que Adotar */
 .porque-adotar-container {
     background: linear-gradient(135deg, #f8d7da, #fce5cd);
@@ -61,131 +47,65 @@ body {
     color: #555;
     font-size: 1rem;
 }
+
 /*-------------------------------*/
 
-/* Container da Adoção */
-.adocao-container {
-    background-color: #ffffff;
-    padding: 60px 30px;
+/* Estilos para o container de animais */
+.container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
+    margin-top: 20px;
+}
+
+/* Estilos para os cards dos animais */
+.card {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     text-align: center;
-}
-
-/* Título da Adoção */
-.titulo-adotar {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #2a9d8f;
-    margin-bottom: 10px; /* Ajuste o espaçamento inferior */
-}
-
-/* Subtítulo da Adoção */
-.subtitulo-adotar {
-    font-size: 1.5rem;
-    color: #555;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Ajuste o espaçamento entre o texto e o ícone */
-}
-
-/* Imagem da Adoção */
-.img-adocao {
-    width: 100%;
-    max-width: 300px; /* Limita o tamanho máximo da imagem */
-    border-radius: 10px; /* Bordas arredondadas */
-    margin-bottom: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adiciona sombra suave */
-    transition: transform 0.3s ease; /* Transição suave ao passar o mouse */
-}
-
-.img-adocao:hover {
-    transform: scale(1.05); /* Efeito de zoom suave ao passar o mouse */
-}
-
-/* Container de Animais - Usando Flexbox */
-.animais-container {
-    display: flex; /* Usando Flexbox para alinhar os itens horizontalmente */
-    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte se não couberem na tela */
-    gap: 20px; /* Espaçamento entre os cards */
-    justify-content: space-between; /* Distribui os cards com espaço entre eles */
-    margin-top: 30px;
-}
-
-
-/* Cartão de Animal */
-.animal-card {
-    background-color: #ffffff;
-    border-radius: 10px; /* Borda arredondada para os cards */
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    width: 250px; /* Largura fixa para os cards */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: white;
+    margin: 10px;
 }
 
-/* Cartão de Animal - Efeito de Hover */
-.animal-card:hover {
-    transform: translateY(-10px); /* Efeito de hover */
+.card:hover {
+    transform: translateY(-10px);
 }
 
-/* Imagem do Animal */
-.animal-imagem {
+/* Estilos para as imagens */
+.image {
     width: 100%;
     height: 200px;
-    object-fit: cover;
-    border-radius: 8px; /* Bordas arredondadas para as imagens */
+    object-fit: cover;  /* A imagem vai cobrir o espaço disponível, mantendo a proporção */
+    border-bottom: 1px solid #ddd;
 }
 
-/* Nome do Animal */
+/* Estilos para o conteúdo dos cards */
+.cardContent {
+    padding: 15px;
+}
+
+/* Título e descrição dentro do card */
 .animal-nome {
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;
-    margin-top: 15px;
 }
 
-/* Informações do Animal */
-.animal-tipo, .animal-idade, .animal-raca, .animal-status, .animal-descricao {
+.animal-tipo,
+.animal-idade,
+.animal-raca,
+.animal-descricao,
+.animal-status {
     font-size: 1rem;
     color: #555;
-    margin-top: 10px;
+    margin: 5px 0;
 }
-
-/* Link de Adotar */
-.link-adotar {
-    display: inline-block;
-    background-color: #2a9d8f;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-top: 15px;
-    text-decoration: none;
-}
-
-.link-adotar:hover {
-    background-color: #21867a;
-}
-
-/* Mensagem sem Animais */
-.mensagem-sem-animais {
-    color: #e63946;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-right: -100px;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-}
-
 
 /*-------------------------------*/
 
@@ -231,3 +151,154 @@ body {
     margin-bottom: 30px;
 }
 
+/* Estilos para a imagem de "Nossos Animais" */
+.img-adocao {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;  /* Arredonda a imagem */
+    margin-bottom: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+/* Filtro de tipo menor e centralizado */
+.filtro-tipo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filtro-tipo-select {
+    width: 150px;  /* Tamanho menor */
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    margin-top: -10px;
+}
+
+/* Estilos para os cards de animais */
+.card {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease;
+    background-color: white;
+    margin: 10px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+/* Botões de editar e deletar */
+.link-editar,
+.link-deletar {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Cor de fundo do botão editar */
+.link-editar {
+    background-color: #007BFF;
+}
+
+/* Cor de fundo do botão deletar */
+.link-deletar {
+    background-color: #e63946;
+}
+
+/* Efeito de hover para o botão editar */
+.link-editar:hover {
+    background-color: #0056b3;  /* Azul mais escuro */
+}
+
+/* Efeito de hover para o botão deletar */
+.link-deletar:hover {
+    background-color: #d62828;  /* Vermelho mais intenso */
+}
+
+/* Estilo para as imagens dos animais */
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;  /* A imagem vai cobrir o espaço disponível, mantendo a proporção */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Conteúdo dos cards */
+.cardContent {
+    padding: 15px;
+}
+
+.animal-nome {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.animal-tipo,
+.animal-idade,
+.animal-raca,
+.animal-descricao,
+.animal-status {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+/* Overlay de confirmação de exclusão */
+.confirm-delete-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-delete-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.confirm-delete-box button {
+    margin: 10px;
+}
+
+.success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 10;
+}

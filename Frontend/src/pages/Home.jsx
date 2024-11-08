@@ -11,7 +11,10 @@ function Home() {
     const [animais, setAnimais] = useState([]);
     const [erro, setErro] = useState(null);
     const [tipo, setTipo] = useState(''); // Estado para o tipo de animal
-    const tiposAnimais = ['Cachorro', 'Gato', 'Pássaro']; // Tipos de animais
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para controlar a confirmação de exclusão
+    const [animalToDelete, setAnimalToDelete] = useState(null); // Animal selecionado para exclusão
+    const [successMessage, setSuccessMessage] = useState(''); // Mensagem de sucesso
+    const tiposAnimais = ['Cachorro', 'Coelho', 'Gato']; // Tipos de animais
 
     // Função para buscar os animais do backend
     const fetchAnimais = async (tipo) => {
@@ -41,22 +44,20 @@ function Home() {
     const navigate = useNavigate();
 
     // Função para deletar o animal
-    const handleDeletar = async (idAnimal) => {
-        const confirmDelete = window.confirm('Tem certeza que deseja excluir este animal?');
-        if (confirmDelete) {
-            try {
-                const response = await fetch(`http://localhost:8080/api/animal/${idAnimal}`, {
-                    method: 'DELETE',
-                });
-                if (!response.ok) {
-                    throw new Error('Erro ao deletar animal');
-                }
-                fetchAnimais(tipo); // Atualiza a lista de animais após a exclusão
-                alert('Animal deletado com sucesso!');
-            } catch (error) {
-                console.error('Erro ao deletar animal:', error);
-                alert('Erro ao deletar animal.');
+    const handleDeletar = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/animal/${animalToDelete.idAnimal}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error('Erro ao deletar animal');
             }
+            setSuccessMessage('Animal deletado com sucesso!');
+            fetchAnimais(tipo); // Atualiza a lista de animais após a exclusão
+            setShowConfirmDelete(false); // Fecha a confirmação
+        } catch (error) {
+            console.error('Erro ao deletar animal:', error);
+            setSuccessMessage('Erro ao deletar animal.');
         }
     };
 
@@ -69,110 +70,123 @@ function Home() {
         navigate('/formulario-edicao', { state: { animal } });
     };
 
+    const handleConfirmDelete = (animal) => {
+        setAnimalToDelete(animal);
+        setShowConfirmDelete(true);
+    };
+
     return (
         <div>
             {/* Porque Adotar */}
-            <div className="porque-adotar-container">
-                <h1 className="titulo-porque-adotar">Por que adotar?</h1>
-                <div className="motivos-container">
-                    <div className="motivo">
-                        <FaPaw className="motivo-icon" />
-                        <h2>Salve uma vida</h2>
-                        <p>Ao adotar, você dá uma nova chance a um animal que precisa de amor e cuidado.</p>
-                    </div>
-                    <div className="motivo">
-                        <FaHeart className="motivo-icon" />
-                        <h2>Amor incondicional</h2>
-                        <p>Animais adotados oferecem amor e amizade que transformam sua vida.</p>
-                    </div>
-                    <div className="motivo">
-                        <FaHome className="motivo-icon" />
-                        <h2>Faça a diferença</h2>
-                        <p>Adotar um animal ajuda a reduzir o número de animais em abrigos e faz a diferença na comunidade.</p>
-                    </div>
-                    <div className="motivo">
-                        <FaSmile className="motivo-icon" />
-                        <h2>Companhia e alegria</h2>
-                        <p>Animais de estimação trazem alegria e felicidade para o seu lar.</p>
+            <div>
+                {/* Importância da Adoção */}
+                <div className="porque-adotar-container">
+                    <h1 className="titulo-porque-adotar">Importância da Adoção</h1>
+                    <div className="motivos-container">
+                        <div className="motivo">
+                            <FaPaw className="motivo-icon" />
+                            <h2>Ato que salva vidas</h2>
+                            <p>Adotar um animal é um gesto de amor que salva uma vida e dá a ele uma nova chance de ser feliz.</p>
+                        </div>
+                        <div className="motivo">
+                            <FaHome className="motivo-icon" />
+                            <h2>Faz a diferença</h2>
+                            <p>Ao adotar, você contribui para reduzir o número de animais em abrigos e ajuda a criar uma sociedade mais solidária.</p>
+                        </div>
+                        <div className="motivo">
+                            <FaHeart className="motivo-icon" />
+                            <h2>Amor incondicional</h2>
+                            <p>Animais adotados oferecem amor, lealdade e uma amizade sincera, transformando a vida de seus donos.</p>
+                        </div>
+                        <div className="motivo">
+                            <FaSmile className="motivo-icon" />
+                            <h2>Companhia e alegria</h2>
+                            <p>Animais de estimação trazem muita felicidade e uma companhia fiel para todos os momentos da sua vida.</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Nossos animais */}
-            <div className="adocao-container">
+            {/* Nossos Animais */}
+            <div className="header-adocao">
                 <img src={adocao} alt="Adocao" className="img-adocao" />
-                <h1 className="titulo-adotar">Nossos animais</h1>
-                {/* Filtro de tipo */}
-                <div className="filtro-tipo-container">
-                    <p>Filtar animal por tipo:</p>
-                    <select
-                        className="filtro-tipo-select"
-                        value={tipo}
-                        onChange={(e) => setTipo(e.target.value)}
-                    >
-                        <option value="">Todos</option>
-                        {tiposAnimais.map((t, index) => (
-                            <option key={index} value={t}>{t}</option>
-                        ))}
-                    </select>
-                </div>
+                <h1 className="titulo-adotar">Conheça nossos animais</h1>
+            </div>
+            <div className="filtro-tipo-container">
+                <p>Filtrar animal por tipo:</p>
+                <select
+                    className="filtro-tipo-select"
+                    value={tipo}
+                    onChange={(e) => setTipo(e.target.value)}
+                >
+                    <option value="">Todos os tipos</option>
+                    {tiposAnimais.map((t, index) => (
+                        <option key={index} value={t}>{t}</option>
+                    ))}
+                </select>
+            </div>
 
-                <div className="animais-container">
-                    {erro && <p className="erro">{erro}</p>}
-
-                    {animais.length > 0 ? (
-                        animais.map(animal => (
-                            <div key={animal.idAnimal} className="animal-card">
-                                <img
-                                    src={animal.imagem ? `http://localhost:8080/api/animal/image/${animal.idAnimal}` : semFoto}
-                                    alt={animal.nome}
-                                    className="animal-imagem"
-                                />
-                                <div className="container-informacoes-animais">
-                                    <h3 className="animal-nome">{animal.nome}</h3>
-                                    <p className="animal-tipo"><strong>Tipo:</strong>{
-                                        animal.tipo === 'PASSARO' ? 'Pássaro' :
-                                            animal.tipo === 'CACHORRO' ? 'Cachorro' :
-                                                animal.tipo === 'GATO' ? 'Gato' :
+            <div className="container"> 
+                {animais.length > 0 ? (
+                    animais.map((animal) => (
+                        <div key={animal.idAnimal} className="card">
+                            <img
+                                src={`http://localhost:8080/api/animal/image/${animal.idAnimal}` || semFoto}
+                                alt={`Imagem do animal ${animal.idAnimal}`}
+                                className="image" 
+                            />
+                            <div className="cardContent"> 
+                                <h3 className="animal-nome">{animal.nome}</h3>
+                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
+                                <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
+                                <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
+                                <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
+                                <p className="animal-status">
+                                    <strong>Status de Adoção:</strong> {
+                                        animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
+                                            animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
+                                                animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
                                                     'Status desconhecido'
                                     }
-                                    </p>
-                                    <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
-                                    <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
-                                    <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
-                                    <p className="animal-status">
-                                        <strong>Status de Adoção:</strong> {
-                                            animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
-                                                animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
-                                                    animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
-                                                        'Status desconhecido'
-                                        }
-                                    </p>
-                                </div>
-                                <button onClick={() => handleEditar(animal)} className="link-editar">
-                                    Editar
-                                </button>
-                                <button onClick={() => handleDeletar(animal.idAnimal)} className="link-deletar">
-                                    Remover
-                                </button>
+                                </p>
                             </div>
-                        ))
-                    ) : (
-                        <p className="mensagem-sem-animais">Infelizmente, não há animais disponíveis para adoção no momento.</p>
-                    )}
-                </div>
+                            <button onClick={() => handleEditar(animal)} className="link-editar">Editar</button>
+                            <button onClick={() => handleConfirmDelete(animal)} className="link-deletar">Remover</button>
+                        </div>
+                    ))
+                ) : (
+                    <p className="mensagem-sem-animais">Infelizmente, não há animais disponíveis para adoção no momento.</p>
+                )}
             </div>
+
+            {/* Confirmação de Remoção */}
+            {showConfirmDelete && (
+                <div className="confirm-delete-overlay">
+                    <div className="confirm-delete-box">
+                        <h2>Tem certeza que deseja excluir este animal?</h2>
+                        <button onClick={handleDeletar} className="confirm-button">Sim, excluir</button>
+                        <button onClick={() => setShowConfirmDelete(false)} className="cancel-button">Cancelar</button>
+                    </div>
+                </div>
+            )}
+
+            {/* Mensagem de Sucesso */}
+            {successMessage && (
+                <div className="success-message">
+                    <p>{successMessage}</p>
+                </div>
+            )}
 
             {/* Doação */}
             <div className="objetivo-container">
                 <img src={gato} alt="Gato" className="gato" />
-                <h1 className="titulo-doar">Deseja doar?</h1>
+                <h1 className="titulo-doar">Cadastrar Animais para Adoção</h1>
                 <p className="descricao">
-                    Doar um animal é um ato de amor e responsabilidade. Certifique-se de que está pronto para ajudar a
-                    encontrar um novo lar para um amigo peludo. Lembre-se que cada animal merece atenção, carinho e um lar seguro.
+                    A Petadota realiza o cadastro dos animais para adoção, garantindo que cada um receba a atenção e cuidado que merece. Adoção é um ato de amor e responsabilidade, oferecendo a esses animais uma nova chance de um lar seguro e carinhoso.
                 </p>
+
                 <button onClick={handleClickDoacao} className="link-doacao">
-                    clique aqui
+                    Cadastre aqui
                 </button>
             </div>
         </div>
