@@ -5,9 +5,8 @@ import { FaPhone, FaEnvelope } from 'react-icons/fa';
 
 function Informacoes() {
     useEffect(() => {
-        // Quando a página for carregada, rola até o topo
         window.scrollTo(0, 0);
-    }, []);  // O array vazio garante que o efeito aconteça apenas na montagem do componente
+    }, []); 
 
     return (
         <div className="informacoes-container">

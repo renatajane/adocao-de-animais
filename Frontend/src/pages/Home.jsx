@@ -36,26 +36,9 @@ function Home() {
     // useEffect para chamar a função fetchAnimais quando o componente for montado
     useEffect(() => {
         fetchAnimais(tipo);
-    }, [tipo]); // Dependência no estado tipo
+    }, [tipo]);
 
     const navigate = useNavigate();
-
-    // Função para atualizar o status de adoção do animal para "ADOTADO"
-    const handleAdotar = async (idAnimal) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/animal/${idAnimal}/status?status=ADOTADO`, {
-                method: 'PATCH',
-            });
-            if (!response.ok) {
-                throw new Error('Erro ao atualizar status');
-            }
-            fetchAnimais(tipo); // Atualiza a lista de animais após a alteração
-            alert('Parabéns! Você adotou um animal!');
-        } catch (error) {
-            console.error('Erro ao adotar o animal:', error);
-            alert('Erro ao adotar o animal.');
-        }
-    };
 
     // Função para deletar o animal
     const handleDeletar = async (idAnimal) => {
@@ -115,16 +98,13 @@ function Home() {
                 </div>
             </div>
 
-            {/* Adoção */}
+            {/* Nossos animais */}
             <div className="adocao-container">
                 <img src={adocao} alt="Adocao" className="img-adocao" />
-                <h1 className="titulo-adotar">Está pronto para adotar?</h1>
-                <h2 className="subtitulo-adotar">
-                    Estamos muito felizes com sua escolha!
-                </h2>
-
+                <h1 className="titulo-adotar">Nossos animais</h1>
                 {/* Filtro de tipo */}
                 <div className="filtro-tipo-container">
+                    <p>Filtar animal por tipo:</p>
                     <select
                         className="filtro-tipo-select"
                         value={tipo}
@@ -148,27 +128,26 @@ function Home() {
                                     alt={animal.nome}
                                     className="animal-imagem"
                                 />
-                                <h3 className="animal-nome">{animal.nome}</h3>
-                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
-                                <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
-                                <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
-                                <p className="animal-status">
-                                    <strong>Status de Adoção:</strong> {
-                                        animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
-                                            animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
-                                                animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
-                                                    'Status desconhecido'
-                                    }
-                                </p>
-                                <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
-                                <button onClick={() => handleAdotar(animal.idAnimal)} className="link-adotar">
-                                    Adotar
-                                </button>
-                                <button onClick={() => handleDeletar(animal.idAnimal)} className="link-deletar">
-                                    Deletar
-                                </button>
+                                <div className="container-informacoes-animais">
+                                    <h3 className="animal-nome">{animal.nome}</h3>
+                                    <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
+                                    <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
+                                    <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
+                                    <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
+                                    <p className="animal-status">
+                                        <strong>Status de Adoção:</strong> {
+                                            animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
+                                                animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
+                                                    animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
+                                                        'Status desconhecido'
+                                        }
+                                    </p>
+                                </div>
                                 <button onClick={() => handleEditar(animal)} className="link-editar">
                                     Editar
+                                </button>
+                                <button onClick={() => handleDeletar(animal.idAnimal)} className="link-deletar">
+                                    Remover
                                 </button>
                             </div>
                         ))

@@ -44,6 +44,12 @@ public class AnimalController {
     @Autowired
     AnimalRepository repository;
 
+    // Busca animal por id
+    @GetMapping("/{id}")
+    public AnimalDtoRead findById(@PathVariable Integer id){
+        return service.findById(id);
+    }
+
     // Insere um animal novo
     @PostMapping
     public void create(@RequestBody AnimalDto animalDto) {

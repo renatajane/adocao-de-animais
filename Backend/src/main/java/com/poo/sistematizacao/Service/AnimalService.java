@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.poo.sistematizacao.dto.AnimalDto;
 import com.poo.sistematizacao.dto.AnimalDtoRead;
+import com.poo.sistematizacao.exception.AnimalNotFoundException;
 import com.poo.sistematizacao.model.Animal;
 import com.poo.sistematizacao.model.StatusAdocao;
 import com.poo.sistematizacao.repository.AnimalRepository;
@@ -30,6 +31,20 @@ public class AnimalService {
     AnimalRepository repository;
 
     private final String uploadDir = "uploads/";
+
+    // Busca animal por Id
+    public AnimalDtoRead findById(Integer id) {
+        // Busca o animal no repositório
+        Optional<Animal> animalOptional = repository.findById(id);
+
+        // Verifica se o animal foi encontrado
+        if (animalOptional.isPresent()) {
+            Animal animal = animalOptional.get();
+            return new AnimalDtoRead(animal);
+        } else {
+            throw new AnimalNotFoundException("Animal não encontrado para o ID: " + id);
+        }
+    }
 
     // Insere um animal novo
     public void create(AnimalDto animalDto) {
@@ -45,10 +60,10 @@ public class AnimalService {
 
             animalDto.getStatusAdocao();
             animal.setStatusAdocao(StatusAdocao.DISPONIVEL);
-    
+
             // Salva o animal no banco de dados
             Animal savedAnimal = repository.save(animal);
-    
+
             // Verifica se a imagem foi recebida
             if (file != null && !file.isEmpty()) {
                 // Realiza o upload da imagem para o animal recém-criado
@@ -56,28 +71,29 @@ public class AnimalService {
                 if (!Files.exists(directoryPath)) {
                     Files.createDirectories(directoryPath);
                 }
-    
+
                 // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
-                String fileName = savedAnimal.getIdAnimal() + "_" + file.getOriginalFilename(); // Inclui o ID do animal no nome
+                String fileName = savedAnimal.getIdAnimal() + "_" + file.getOriginalFilename(); // Inclui o ID do animal
+                                                                                                // no nome
                 Path filePath = directoryPath.resolve(fileName);
                 Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-    
+
                 // Cria a URL para acessar a imagem, com base no ID do animal
                 String imageUrl = "http://localhost:8080/uploads/" + fileName;
                 savedAnimal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
-    
+
                 // Salva novamente o animal com a URL da imagem
                 savedAnimal = repository.save(savedAnimal);
             }
-    
+
             // Retorna o animal recém-criado com a imagem associada
             return ResponseEntity.ok(new AnimalDto(savedAnimal));
-    
+
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-    }    
+    }
 
     // Busca todos os animais
     public List<AnimalDtoRead> list() {
@@ -94,10 +110,10 @@ public class AnimalService {
     // Atualiza informações de um animal
     public ResponseEntity<AnimalDto> update(Integer id, AnimalDto animalDto) {
         Optional<Animal> optionalAnimal = repository.findById(id);
-    
+
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
-            
+
             // Atualizando os dados do animal, exceto a imagem
             animal.setNome(animalDto.getNome());
             animal.setTipo(animalDto.getTipo());
@@ -105,35 +121,34 @@ public class AnimalService {
             animal.setRaca(animalDto.getRaca());
             animal.setStatusAdocao(animalDto.getStatusAdocao());
             animal.setDescricao(animalDto.getDescricao());
-    
+
             // Salvando o animal atualizado
             Animal updatedAnimal = repository.save(animal);
-    
+
             return ResponseEntity.ok(new AnimalDto(updatedAnimal));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    
 
     // Edita apenas o status de adoção do animal
-     public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
+    public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
         Optional<Animal> optionalAnimal = repository.findById(id);
 
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
-            animal.setStatusAdocao(statusAdocao);  // Atualizando o status de adoção
-            Animal updatedAnimal = repository.save(animal);  // Salvando o animal com o novo status
-            return ResponseEntity.ok(new AnimalDto(updatedAnimal));  // Retornando o AnimalDto atualizado
+            animal.setStatusAdocao(statusAdocao); // Atualizando o status de adoção
+            Animal updatedAnimal = repository.save(animal); // Salvando o animal com o novo status
+            return ResponseEntity.ok(new AnimalDto(updatedAnimal)); // Retornando o AnimalDto atualizado
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Caso o animal não seja encontrado
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Caso o animal não seja encontrado
         }
     }
 
     // Upload de imagem do animal
     public ResponseEntity<String> uploadImage(Integer animalId, MultipartFile file) {
         Optional<Animal> optionalAnimal = repository.findById(animalId);
-    
+
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
             try {
@@ -142,21 +157,21 @@ public class AnimalService {
                 if (!Files.exists(directoryPath)) {
                     Files.createDirectories(directoryPath);
                 }
-    
+
                 // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
                 String fileName = animalId + "_" + file.getOriginalFilename(); // Inclui o ID do animal no nome
                 Path filePath = directoryPath.resolve(fileName);
                 Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-    
+
                 // Cria a URL para acessar a imagem, com base no ID do animal
                 String imageUrl = "http://localhost:8080/uploads/" + fileName;
                 animal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
-    
+
                 // Salva a URL no banco de dados
                 repository.save(animal);
-    
+
                 return ResponseEntity.ok(imageUrl); // Retorna o URL da imagem
-    
+
             } catch (IOException e) {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao fazer upload");
@@ -164,7 +179,7 @@ public class AnimalService {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal não encontrado.");
         }
-    }    
+    }
 
     // Método para recuperar a imagem
     public Resource getImage(Integer id) {
