@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import gato from '../assets/gato.png';
 import semFoto from '../assets/nao-tem-foto.png';
 import adocao from '../assets/img-adocao.jpg';
-import './Home.css';
+import '../styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {

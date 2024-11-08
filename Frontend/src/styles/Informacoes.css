@@ -1,0 +1,131 @@
+/* Estilo geral da página */
+.informacoes-container {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f1f1;
+    padding: 30px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+/* Estilo das seções */
+.sobre-nos-container,
+.contato-container,
+.politica-privacidade-container {
+    background-color: #ffffff;
+    padding: 25px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 800px;
+    width: 100%;
+}
+
+.sobre-nos-container:hover,
+.contato-container:hover,
+.politica-privacidade-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos */
+.sobre-nos-container h1,
+.contato-container h1,
+.politica-privacidade-container h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+/* Parágrafos */
+.sobre-nos-container p,
+.contato-container p,
+.politica-privacidade-container p {
+    font-size: 18px;
+    color: #34495e;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Links */
+.sobre-nos-container a,
+.contato-container a,
+.politica-privacidade-container a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sobre-nos-container a:hover,
+.contato-container a:hover,
+.politica-privacidade-container a:hover {
+    text-decoration: underline;
+}
+
+/* Centralização da imagem */
+.sobre-nos-container img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo das fontes */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f1f1;
+    color: #34495e;
+    margin: 0;
+}
+
+/* Títulos das seções */
+.titulo-sobre-nos,
+.titulo-contato,
+.titulo-politica {
+    color: #2c3e50;
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .informacoes-container {
+        padding: 20px;
+    }
+
+    .sobre-nos-container,
+    .contato-container,
+    .politica-privacidade-container {
+        padding: 15px;
+    }
+
+    .img-animais {
+        width: 90%;
+    }
+
+    .titulo-sobre-nos,
+    .titulo-contato,
+    .titulo-politica {
+        font-size: 28px;
+    }
+
+    .sobre-nos-container p,
+    .contato-container p,
+    .politica-privacidade-container p {
+        font-size: 16px;
+    }
+}
