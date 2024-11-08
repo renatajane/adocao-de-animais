@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/FormularioDoacao.css';
+import '../styles/FormularioCadastro.css';
+import { useNavigate } from 'react-router-dom';
 
-function FormularioDoacao() {
+function FormularioCadastro() {
     const [animal, setAnimal] = useState({
         nome: '',
         tipo: '',
@@ -11,6 +12,8 @@ function FormularioDoacao() {
         descricao: '',
         imagem: null
     });
+    const [mensagem, setMensagem] = useState(null);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,7 +26,7 @@ function FormularioDoacao() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         const formData = new FormData();
         formData.append('nome', animal.nome);
         formData.append('tipo', animal.tipo);
@@ -31,25 +34,40 @@ function FormularioDoacao() {
         formData.append('raca', animal.raca);
         formData.append('statusAdocao', animal.statusAdocao);
         formData.append('descricao', animal.descricao);
-        formData.append('file', animal.imagem);  // Adiciona o arquivo da imagem
-    
+        formData.append('file', animal.imagem);
+
         try {
             const response = await fetch('http://localhost:8080/api/animal/createWithImage', {
                 method: 'POST',
-                body: formData, // Envia tudo no mesmo formData
+                body: formData,
             });
-    
+
             if (!response.ok) {
                 throw new Error('Erro ao cadastrar animal');
             }
-    
+
             const data = await response.json();
             console.log("Dados recebidos: ", data);
-            alert('Animal cadastrado com sucesso!');
+            setMensagem({ tipo: 'success', texto: 'Animal cadastrado com sucesso!' });
+
+            // Limpar campos
+            setAnimal({
+                nome: '',
+                tipo: '',
+                idade: '',
+                raca: '',
+                statusAdocao: '',
+                descricao: '',
+                imagem: null
+            });
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
-            alert('Erro ao enviar dados');
+            setMensagem({ tipo: 'error', texto: 'Erro ao enviar dados' });
         }
+    };
+
+    const handleVoltar = () => {
+        navigate('/');  // Redireciona para a tela de home
     };
 
     return (
@@ -62,7 +80,12 @@ function FormularioDoacao() {
                 </div>
                 <div>
                     <label>Tipo:</label>
-                    <input type="text" name="tipo" value={animal.tipo} onChange={handleChange} required />
+                    <select name="tipo" value={animal.tipo} onChange={handleChange} required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="CACHORRO">Cachorro</option>
+                        <option value="GATO">Gato</option>
+                        <option value="PASSARO">Pássaro</option>
+                    </select>
                 </div>
                 <div>
                     <label>Idade:</label>
@@ -72,15 +95,6 @@ function FormularioDoacao() {
                     <label>Raça:</label>
                     <input type="text" name="raca" value={animal.raca} onChange={handleChange} required />
                 </div>
-                {/* <div>
-                    <label>Status de Adoção:</label>
-                    <select name="statusAdocao" value={animal.statusAdocao} onChange={handleChange} required>
-                        <option value="">Selecione o status</option>
-                        <option value="DISPONIVEL">Disponível</option>
-                        <option value="EM_PROCESSO_ADOCAO">Em processo de adoção</option>
-                        <option value="ADOTADO">Adotado</option>
-                    </select>
-                </div> */}
                 <div>
                     <label>Descrição:</label>
                     <textarea name="descricao" value={animal.descricao} onChange={handleChange} required />
@@ -91,8 +105,16 @@ function FormularioDoacao() {
                 </div>
                 <button type="submit">Cadastrar Animal</button>
             </form>
+
+            {mensagem && (
+                <div className={`mensagem ${mensagem.tipo === 'success' ? 'success' : 'error'}`}>
+                    {mensagem.texto}
+                </div>
+            )}
+
+            <button className="voltar-button" onClick={handleVoltar}>Voltar para Home</button>
         </div>
     );
 }
 
-export default FormularioDoacao;
+export default FormularioCadastro;

@@ -30,6 +30,7 @@ import com.poo.sistematizacao.dto.AnimalDto;
 import com.poo.sistematizacao.dto.AnimalDtoRead;
 import com.poo.sistematizacao.model.Animal;
 import com.poo.sistematizacao.model.StatusAdocao;
+import com.poo.sistematizacao.model.TipoAnimal;
 import com.poo.sistematizacao.repository.AnimalRepository;
 import com.poo.sistematizacao.service.AnimalService;
 
@@ -60,7 +61,7 @@ public class AnimalController {
     @PostMapping("/createWithImage")
     public ResponseEntity<AnimalDto> createWithImage(
         @RequestParam("nome") String nome,
-        @RequestParam("tipo") String tipo,
+        @RequestParam("tipo") TipoAnimal tipo,
         @RequestParam("idade") Integer idade,
         @RequestParam("raca") String raca,
         @RequestParam("descricao") String descricao,

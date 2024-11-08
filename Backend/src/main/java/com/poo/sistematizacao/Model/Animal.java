@@ -32,8 +32,9 @@ public class Animal {
     @Column(name="nome")
     private String nome;
 
+    @Enumerated(EnumType.STRING)  
     @Column(name="tipo")
-    private String tipo; //ex: gato, cachorro
+    private TipoAnimal tipo; //ex: gato, cachorro
 
     @Column(name="idade")
     private Integer idade;

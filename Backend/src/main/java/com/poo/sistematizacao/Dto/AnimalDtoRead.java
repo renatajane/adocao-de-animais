@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.poo.sistematizacao.model.Animal;
 import com.poo.sistematizacao.model.StatusAdocao;
+import com.poo.sistematizacao.model.TipoAnimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class AnimalDtoRead {
 
     // Propriedades
     private Integer idAnimal;
-    private String tipo;
+    private TipoAnimal tipo;
     private String nome;
     private Integer idade;
     private String raca;

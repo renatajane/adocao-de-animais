@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.poo.sistematizacao.model.Animal;
 import com.poo.sistematizacao.model.StatusAdocao;
+import com.poo.sistematizacao.model.TipoAnimal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import lombok.Setter;
 public class AnimalDto {
 
     private Integer idAnimal;
-    private String tipo;
+    private TipoAnimal tipo;
     private String nome;
     private Integer idade;
     private String raca;
@@ -25,7 +26,7 @@ public class AnimalDto {
     private String descricao;
 
     // Construtor sem o idAnimal para criação
-    public AnimalDto(String nome, String tipo, Integer idade, String raca, String descricao) {
+    public AnimalDto(String nome, TipoAnimal tipo, Integer idade, String raca, String descricao) {
         this.nome = nome;
         this.tipo = tipo;
         this.idade = idade;

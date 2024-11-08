@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import FormularioDoacao from './pages/FormularioDoacao';
+import FormularioDoacao from './pages/FormularioCadastro';
 import FormularioEdicao from './pages/FormularioEdicao';
 import Home from './pages/Home';
 import Informacoes from './pages/Informacoes';

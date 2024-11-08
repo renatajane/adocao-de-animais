@@ -130,7 +130,13 @@ function Home() {
                                 />
                                 <div className="container-informacoes-animais">
                                     <h3 className="animal-nome">{animal.nome}</h3>
-                                    <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
+                                    <p className="animal-tipo"><strong>Tipo:</strong>{
+                                        animal.tipo === 'PASSARO' ? 'Pássaro' :
+                                            animal.tipo === 'CACHORRO' ? 'Cachorro' :
+                                                animal.tipo === 'GATO' ? 'Gato' :
+                                                    'Status desconhecido'
+                                    }
+                                    </p>
                                     <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
                                     <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
                                     <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>

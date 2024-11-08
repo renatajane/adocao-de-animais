@@ -31,9 +31,10 @@ label {
     margin-bottom: 5px;
 }
 
-/* Inputs de texto e número */
+/* Inputs de texto, número e select */
 input[type="text"],
 input[type="number"],
+select,
 textarea,
 input[type="file"] {
     width: 100%;
@@ -43,13 +44,21 @@ input[type="file"] {
     border-radius: 6px;
     font-size: 16px;
     color: #555;
-    background-color: #fff;
+    background-color: #fff; /* Fundo branco */
     transition: border-color 0.3s;
 }
 
-/* Efeito de foco nos inputs */
+/* Estilo específico para o select */
+select {
+    appearance: none; /* Remove estilo padrão */
+    background-color: #fff; /* Fundo branco */
+    cursor: pointer;
+}
+
+/* Efeito de foco nos inputs e select */
 input[type="text"]:focus,
 input[type="number"]:focus,
+select:focus,
 textarea:focus,
 input[type="file"]:focus {
     border-color: #007BFF;
@@ -107,4 +116,38 @@ div {
         font-size: 14px;
         padding: 10px 16px;
     }
+}
+
+.mensagem {
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+/* Botão de voltar */
+.voltar-button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #cfcfc4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.voltar-button:hover {
+    background-color: #0056b3;
 }

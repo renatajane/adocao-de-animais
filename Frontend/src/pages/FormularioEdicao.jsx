@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../styles/FormularioDoacao.css';
+import '../styles/FormularioCadastro.css';
 
 function FormularioEdicao() {
     const location = useLocation(); // Pega o estado da navegação
