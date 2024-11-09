@@ -1,5 +1,5 @@
 .footer {
-    background-color: #fcfcd7; /* Cor de fundo */
+    background-color: #56a292; /* Cor de fundo */
     text-align: center; /* Centraliza o texto */
     position: relative; /* Para posicionamento */
     bottom: 0; /* Fixa na parte inferior se necessário */
@@ -23,9 +23,10 @@
 
 .footer-nav a {
     text-decoration: none; /* Remove sublinhado */
-    color: #007bff; /* Cor do link */
+    color: #1f0441; /* Cor do link */
 }
 
 .footer-nav a:hover {
     text-decoration: underline; /* Sublinha ao passar o mouse */
 }
+

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import gato from '../assets/gato.png';
 import semFoto from '../assets/nao-tem-foto.png';
 import adocao from '../assets/img-adocao.jpg';
+import gatoCachorro from '../assets/animais-sem-fundo.png'
 import '../styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -112,60 +113,60 @@ function Home() {
             </div>
 
             {/* Nossos Animais */}
-            <div className="header-adocao">
+            <div className="header-nossos-animais">
                 <img src={adocao} alt="Adocao" className="img-adocao" />
                 <h1 className="titulo-adotar">Conheça nossos animais</h1>
-            </div>
-            <div className="filtro-tipo-container">
-                <p>Filtrar animal por tipo:</p>
-                <select
-                    className="filtro-tipo-select"
-                    value={tipo}
-                    onChange={(e) => setTipo(e.target.value)}
-                >
-                    <option value="">Todos os tipos</option>
-                    {tiposAnimais.map((t, index) => (
-                        <option key={index} value={t}>{t}</option>
-                    ))}
-                </select>
-            </div>
+                <div className="filtro-tipo-container">
+                    <p>Filtrar animal por tipo:</p>
+                    <select
+                        className="filtro-tipo-select"
+                        value={tipo}
+                        onChange={(e) => setTipo(e.target.value)}
+                    >
+                        <option value="">Todos os tipos</option>
+                        {tiposAnimais.map((t, index) => (
+                            <option key={index} value={t}>{t}</option>
+                        ))}
+                    </select>
+                </div>
 
-            <div className="container">
-                {animais.length > 0 ? (
-                    animais.map((animal) => (
-                        <div key={animal.idAnimal} className="card">
-                            <img
-                                src={`http://localhost:8080/api/animal/image/${animal.idAnimal}` || semFoto}
-                                alt={`Imagem do animal ${animal.idAnimal}`}
-                                className="image"
-                            />
-                            <div className="cardContent">
-                                <h3 className="animal-nome">{animal.nome}</h3>
-                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo === 'CACHORRO' ? 'Cachorro' :
-                                    animal.tipo === 'GATO' ? 'Gato' :
-                                        animal.tipo === 'COELHO' ? 'Coelho' :
-                                            'Tipo desconhecido'
-                                }
-                                </p>
-                                <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
-                                <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
-                                <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
-                                <p className="animal-status">
-                                    <strong>Status de Adoção:</strong> {
-                                        animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
-                                            animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
-                                                animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
-                                                    'Status desconhecido'
+                <div className="container">
+                    {animais.length > 0 ? (
+                        animais.map((animal) => (
+                            <div key={animal.idAnimal} className="card">
+                                <img
+                                    src={`http://localhost:8080/api/animal/image/${animal.idAnimal}` || semFoto}
+                                    alt={`Imagem do animal ${animal.idAnimal}`}
+                                    className="image"
+                                />
+                                <div className="cardContent">
+                                    <h3 className="animal-nome">{animal.nome}</h3>
+                                    <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo === 'CACHORRO' ? 'Cachorro' :
+                                        animal.tipo === 'GATO' ? 'Gato' :
+                                            animal.tipo === 'COELHO' ? 'Coelho' :
+                                                'Tipo desconhecido'
                                     }
-                                </p>
+                                    </p>
+                                    <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
+                                    <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
+                                    <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>
+                                    <p className="animal-status">
+                                        <strong>Status de Adoção:</strong> {
+                                            animal.statusAdocao === 'DISPONIVEL' ? 'Disponível para adoção' :
+                                                animal.statusAdocao === 'EM_PROCESSO_ADOCAO' ? 'Em processo de adoção' :
+                                                    animal.statusAdocao === 'ADOTADO' ? 'Adotado' :
+                                                        'Status desconhecido'
+                                        }
+                                    </p>
+                                </div>
+                                <button onClick={() => handleEditar(animal)} className="link-editar">Editar</button>
+                                <button onClick={() => handleConfirmDelete(animal)} className="link-deletar">Remover</button>
                             </div>
-                            <button onClick={() => handleEditar(animal)} className="link-editar">Editar</button>
-                            <button onClick={() => handleConfirmDelete(animal)} className="link-deletar">Remover</button>
-                        </div>
-                    ))
-                ) : (
-                    <p className="mensagem-sem-animais">Infelizmente, não há animais disponíveis para adoção no momento.</p>
-                )}
+                        ))
+                    ) : (
+                        <p className="mensagem-sem-animais">Infelizmente, não há animais disponíveis para adoção no momento.</p>
+                    )}
+                </div>
             </div>
 
             {/* Confirmação de Remoção */}
@@ -173,8 +174,8 @@ function Home() {
                 <div className="confirm-delete-overlay">
                     <div className="confirm-delete-box">
                         <h2>Tem certeza que deseja excluir este animal?</h2>
-                        <button onClick={handleDeletar} className="confirm-button">Sim, excluir</button>
-                        <button onClick={() => setShowConfirmDelete(false)} className="cancel-button">Cancelar</button>
+                        <button onClick={handleDeletar} className="link-editar">Sim, excluir</button>
+                        <button onClick={() => setShowConfirmDelete(false)} className="link-deletar">Cancelar</button>
                     </div>
                 </div>
             )}
@@ -188,10 +189,10 @@ function Home() {
 
             {/* Doação */}
             <div className="objetivo-container">
-                <img src={gato} alt="Gato" className="gato" />
+                <img src={gatoCachorro} alt="GatoCachorro" className="gatoCachorro" />
                 <h1 className="titulo-doar">Cadastrar Animais para Adoção</h1>
                 <p className="descricao">
-                    A Petadota realiza o cadastro dos animais para adoção, garantindo que cada um receba a atenção e cuidado que merece. Adoção é um ato de amor e responsabilidade, oferecendo a esses animais uma nova chance de um lar seguro e carinhoso.
+                    A PetAdota realiza o cadastro dos animais para adoção, garantindo que cada um receba a atenção e cuidado que merece. Adoção é um ato de amor e responsabilidade, oferecendo a esses animais uma nova chance de um lar seguro e carinhoso.
                 </p>
 
                 <button onClick={handleClickDoacao} className="link-doacao">

@@ -1,6 +1,6 @@
 /* Container de Por que Adotar */
 .porque-adotar-container {
-    background: linear-gradient(135deg, #f8d7da, #fce5cd);
+    background: #f4d99d;
     padding: 40px;
     text-align: center;
 }
@@ -9,7 +9,7 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #e63946;
+    color: #e94a01;
 }
 
 .motivos-container {
@@ -34,7 +34,7 @@
 
 .motivo-icon {
     font-size: 40px;
-    color: #e63946;
+    color: #e94a01;
     margin-bottom: 15px;
 }
 
@@ -52,6 +52,10 @@
 /*-------------------------------*/
 
 /* Estilos para o container de animais */
+
+.header-nossos-animais{
+    background-color: -webkit-linear-gradient(left, #ffffff, #000000);
+}
 .container {
     display: flex;
     flex-direction: row;
@@ -112,16 +116,16 @@
 
 /* Doação */
 .objetivo-container {
-    background: #e9ecef;
-    padding: 50px 30px;
+    background: #f4d99d;
+    padding: 15px 30px; 
+    margin-top: 50px;
     text-align: center;
     align-items: center;
 }
-
 .titulo-doar {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #6c757d;
+    color: #e94a01;
 }
 
 .descricao {
@@ -132,7 +136,7 @@
 
 .link-doacao {
     display: inline-block;
-    background-color: #e63946;
+    background-color: #e94a01;
     color: white;
     padding: 12px 25px;
     border-radius: 5px;
@@ -142,11 +146,11 @@
 }
 
 .link-doacao:hover {
-    background-color: #d62828;
+    background-color: #c44104;
 }
 
-.gato {
-    width: 150px;
+.gatoCachorro {
+    width: 200px;
     height: 150px;
     object-fit: cover;
     margin-bottom: 30px;
@@ -177,7 +181,6 @@
     width: 150px;  /* Tamanho menor */
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ddd;
     font-size: 1rem;
     margin-top: -10px;
 }
@@ -217,19 +220,23 @@
     transition: background-color 0.3s ease;
 }
 
+.link-editar{
+    margin-bottom: 5px;
+}
+
 /* Cor de fundo do botão editar */
 .link-editar {
-    background-color: #007BFF;
+    background-color: #56a292;
 }
 
 /* Cor de fundo do botão deletar */
 .link-deletar {
-    background-color: #e63946;
+    background-color: #74706a;
 }
 
 /* Efeito de hover para o botão editar */
 .link-editar:hover {
-    background-color: #0056b3;  /* Azul mais escuro */
+    background-color: #31917c;  /* Azul mais escuro */
 }
 
 /* Efeito de hover para o botão deletar */
@@ -290,13 +297,16 @@
 .confirm-delete-box button {
     margin: 10px;
 }
+.confirm-delete-box h2 {
+    color:rgb(73, 72, 72);
+}
 
 .success-message {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #4CAF50;
+    background-color: #348337;
     color: white;
     padding: 10px;
     border-radius: 5px;

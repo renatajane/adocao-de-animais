@@ -1,7 +1,6 @@
 .header {
-    background-color: #fcfcd7; /* Cor de fundo */
+    background-color: #56a292; /* Cor de fundo */
     color: white; /* Cor do texto */
-    padding: 10px; /* Altura do cabeçalho */
     text-align: center; /* Centraliza o texto e a imagem dentro do cabeçalho */
 }
 
@@ -31,13 +30,17 @@
 
 .header-nav a {
     text-decoration: none; /* Remove sublinhado */
-    color: blue; /* Cor do link */
+    color: black; /* Cor do link */
 }
 
 .header-nav a:hover {
     text-decoration: underline; /* Sublinha ao passar o mouse */
 }
 
-.teste{
-    background-color: aqua;
+.header-links {
+     /* 100% da largura da tela, independente de margens */
+    background-color: #f9f6ec; /* Cor de fundo dos links */
+    padding: 10px 0; /* Espaço interno para os links */
+    margin: 0; /* Remove qualquer margem */
+    box-sizing: border-box; /* Inclui padding dentro da largura total */
 }

@@ -8,6 +8,7 @@ function Header() {
             <div className="header-content">
                 <img src={logo} alt="Logo PetAdota" className="logo" />
             </div>
+            <div className="header-links">
             <nav className="header-nav">
                 <ul>
                     <li><a href="/"><strong>Home</strong></a></li>
@@ -15,6 +16,7 @@ function Header() {
                     <li><a href="/formulario-cadastro"><strong>Cadastrar</strong></a></li>
                 </ul>
             </nav>
+            </div>
         </header>
     );
 }
