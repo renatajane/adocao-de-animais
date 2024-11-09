@@ -31,9 +31,13 @@
 
 .header-nav a {
     text-decoration: none; /* Remove sublinhado */
-    color: white; /* Cor do link */
+    color: blue; /* Cor do link */
 }
 
 .header-nav a:hover {
     text-decoration: underline; /* Sublinha ao passar o mouse */
+}
+
+.teste{
+    background-color: aqua;
 }

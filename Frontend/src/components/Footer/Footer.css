@@ -1,6 +1,5 @@
 .footer {
     background-color: #fcfcd7; /* Cor de fundo */
-    padding: 20px; /* Espaçamento interno */
     text-align: center; /* Centraliza o texto */
     position: relative; /* Para posicionamento */
     bottom: 0; /* Fixa na parte inferior se necessário */
