@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../styles/FormularioCadastro.css';
+import '../styles/Formularios.css';
 
 function FormularioEdicao() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []); 
+    
     const location = useLocation(); // Pega o estado da navegação
     const navigate = useNavigate();
     const [mensagem, setMensagem] = useState(null);

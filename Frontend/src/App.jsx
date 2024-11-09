@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import FormularioDoacao from './pages/FormularioCadastro';
+import FormularioCadastro from './pages/FormularioCadastro';
 import FormularioEdicao from './pages/FormularioEdicao';
 import Home from './pages/Home';
-import Informacoes from './pages/Informacoes';
+import Sobre from './pages/Informacoes';
 
 function App() {
   return (
@@ -15,9 +15,9 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/formulario-doacao" element={<FormularioDoacao />} />
+          <Route path="/formulario-cadastro" element={<FormularioCadastro />} />
           <Route path="/formulario-edicao" element={<FormularioEdicao />} />
-          <Route path="/informacoes" element={<Informacoes />} />
+          <Route path="/sobre" element={<Sobre />} />
         </Routes>
       </div>
 

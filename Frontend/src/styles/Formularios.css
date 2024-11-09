@@ -37,7 +37,7 @@ input[type="number"],
 select,
 textarea,
 input[type="file"] {
-    width: 100%;
+    width: 95%;
     padding: 12px;
     margin: 8px 0;
     border: 1px solid #ddd;
@@ -53,6 +53,7 @@ select {
     appearance: none; /* Remove estilo padrão */
     background-color: #fff; /* Fundo branco */
     cursor: pointer;
+    width: 592px
 }
 
 /* Efeito de foco nos inputs e select */
@@ -69,6 +70,7 @@ input[type="file"]:focus {
 textarea {
     resize: vertical;
     height: 100px;
+    width: 565px;
 }
 
 /* Botão de envio */

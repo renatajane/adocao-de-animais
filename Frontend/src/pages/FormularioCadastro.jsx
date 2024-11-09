@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import '../styles/FormularioCadastro.css';
+import React, { useState, useRef, useEffect} from 'react';
+import '../styles/Formularios.css';
 import { useNavigate } from 'react-router-dom';
 
 function FormularioCadastro() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []); 
+
     const [animal, setAnimal] = useState({
         nome: '',
         tipo: '',
@@ -14,6 +19,7 @@ function FormularioCadastro() {
     });
     const [mensagem, setMensagem] = useState(null);
     const navigate = useNavigate();
+    const fileInputRef = useRef(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -50,7 +56,7 @@ function FormularioCadastro() {
             console.log("Dados recebidos: ", data);
             setMensagem({ tipo: 'success', texto: 'Animal cadastrado com sucesso!' });
 
-            // Limpar campos
+            // Limpar campos após submeter os dados
             setAnimal({
                 nome: '',
                 tipo: '',
@@ -60,6 +66,9 @@ function FormularioCadastro() {
                 descricao: '',
                 imagem: null
             });
+            if (fileInputRef.current) {
+                fileInputRef.current.value = ''; // Limpa o campo de imagem
+            }
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
             setMensagem({ tipo: 'error', texto: 'Erro ao enviar dados' });
@@ -76,10 +85,10 @@ function FormularioCadastro() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
-                    <input type="text" name="nome" 
-                      pattern="^[A-Za-z\s]+$" minLength="2" 
-                      title="O nome deve conter apenas letras e no mínimo 2 caracteres."
-                      value={animal.nome} onChange={handleChange} required />
+                    <input type="text" name="nome"
+                        pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$" minLength="2"
+                        title="O nome deve conter apenas letras e no mínimo 2 caracteres."
+                        value={animal.nome} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Tipo:</label>
@@ -104,7 +113,7 @@ function FormularioCadastro() {
                 </div>
                 <div>
                     <label>Imagem:</label>
-                    <input type="file" name="imagem" onChange={handleFileChange} required />
+                    <input type="file" name="imagem" onChange={handleFileChange} ref={fileInputRef} required />
                 </div>
                 <button type="submit">Cadastrar Animal</button>
             </form>

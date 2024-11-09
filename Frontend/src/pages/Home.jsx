@@ -54,7 +54,11 @@ function Home() {
             }
             setSuccessMessage('Animal deletado com sucesso!');
             fetchAnimais(tipo); // Atualiza a lista de animais após a exclusão
-            setShowConfirmDelete(false); // Fecha a confirmação
+            setShowConfirmDelete(false);
+            setTimeout(() => {
+                setSuccessMessage('');
+            }, 2000);
+
         } catch (error) {
             console.error('Erro ao deletar animal:', error);
             setSuccessMessage('Erro ao deletar animal.');
@@ -62,7 +66,7 @@ function Home() {
     };
 
     const handleClickDoacao = () => {
-        navigate('/formulario-doacao');
+        navigate('/formulario-cadastro');
     };
 
     // Função para navegar até a página de edição do animal
@@ -126,18 +130,23 @@ function Home() {
                 </select>
             </div>
 
-            <div className="container"> 
+            <div className="container">
                 {animais.length > 0 ? (
                     animais.map((animal) => (
                         <div key={animal.idAnimal} className="card">
                             <img
                                 src={`http://localhost:8080/api/animal/image/${animal.idAnimal}` || semFoto}
                                 alt={`Imagem do animal ${animal.idAnimal}`}
-                                className="image" 
+                                className="image"
                             />
-                            <div className="cardContent"> 
+                            <div className="cardContent">
                                 <h3 className="animal-nome">{animal.nome}</h3>
-                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo}</p>
+                                <p className="animal-tipo"><strong>Tipo:</strong> {animal.tipo === 'CACHORRO' ? 'Cachorro' :
+                                    animal.tipo === 'GATO' ? 'Gato' :
+                                        animal.tipo === 'COELHO' ? 'Coelho' :
+                                            'Tipo desconhecido'
+                                }
+                                </p>
                                 <p className="animal-idade"><strong>Idade:</strong> {animal.idade}</p>
                                 <p className="animal-raca"><strong>Raça:</strong> {animal.raca}</p>
                                 <p className="animal-descricao"><strong>Descrição:</strong> {animal.descricao}</p>

@@ -9,7 +9,7 @@ function Footer() {
                 <p>&copy; {new Date().getFullYear()} PetAdota. Todos os direitos reservados.</p>
                 <nav className="footer-nav">
                     <ul>
-                        <li><Link to="/informacoes">Mais informações sobre a PetAdota</Link></li>
+                        <li><Link to="/sobre">Mais informações sobre a PetAdota</Link></li>
                     </ul>
                 </nav>
             </div>
