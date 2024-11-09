@@ -54,7 +54,7 @@
 /* Estilos para o container de animais */
 
 .header-nossos-animais{
-    background-color: -webkit-linear-gradient(left, #ffffff, #000000);
+    background-color: #f9f6ec;
 }
 .container {
     display: flex;
@@ -161,12 +161,15 @@
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 50%;  /* Arredonda a imagem */
-    margin-bottom: 30px;
+    margin-bottom: -8px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
+}
+
+.titulo-adotar{
+    color: #e94a01;
 }
 
 /* Filtro de tipo menor e centralizado */
@@ -175,6 +178,10 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.filtro-tipo-container p{
+    color: black;
 }
 
 .filtro-tipo-select {

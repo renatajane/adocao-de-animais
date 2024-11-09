@@ -12,8 +12,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,10 +32,9 @@ public class AnimalService {
 
     // Busca animal por Id
     public AnimalDtoRead findById(Integer id) {
-        // Busca o animal no repositório
+
         Optional<Animal> animalOptional = repository.findById(id);
 
-        // Verifica se o animal foi encontrado
         if (animalOptional.isPresent()) {
             Animal animal = animalOptional.get();
             return new AnimalDtoRead(animal);
@@ -46,53 +43,46 @@ public class AnimalService {
         }
     }
 
-    // Insere um animal novo
-    public void create(AnimalDto animalDto) {
-        Animal animal = new Animal(animalDto);
-        repository.save(animal);
-    }
-
     // Cria animal com a imagem
-    public ResponseEntity<AnimalDto> createWithImage(AnimalDto animalDto, MultipartFile file) {
-        try {
-            // Cria o objeto Animal a partir do AnimalDto
-            Animal animal = new Animal(animalDto);
+    public AnimalDto create(AnimalDto animalDto, MultipartFile file) throws IOException {
 
-            animalDto.getStatusAdocao();
-            animal.setStatusAdocao(StatusAdocao.DISPONIVEL);
+        if (animalDto.getIdade() < 0) {
+            throw new IllegalArgumentException("A idade não pode ser menor do que zero.");
+        }
 
-            // Salva o animal no banco de dados
-            Animal savedAnimal = repository.save(animal);
+        // Cria o objeto Animal a partir do AnimalDto
+        Animal animal = new Animal(animalDto);
 
-            // Verifica se a imagem foi recebida
-            if (file != null && !file.isEmpty()) {
-                // Realiza o upload da imagem para o animal recém-criado
-                Path directoryPath = Paths.get(uploadDir);
-                if (!Files.exists(directoryPath)) {
-                    Files.createDirectories(directoryPath);
-                }
+        animalDto.getStatusAdocao();
+        animal.setStatusAdocao(StatusAdocao.DISPONIVEL);
 
-                // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
-                String fileName = savedAnimal.getIdAnimal() + "_" + file.getOriginalFilename(); // Inclui o ID do animal
-                                                                                                // no nome
-                Path filePath = directoryPath.resolve(fileName);
-                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        // Salva o animal no banco de dados
+        Animal savedAnimal = repository.save(animal);
 
-                // Cria a URL para acessar a imagem, com base no ID do animal
-                String imageUrl = "http://localhost:8080/uploads/" + fileName;
-                savedAnimal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
+        // Verifica se a imagem foi recebida
+        if (file != null && !file.isEmpty()) {
+            // Realiza o upload da imagem para o animal recém-criado
+            Path directoryPath = Paths.get(uploadDir);
 
-                // Salva novamente o animal com a URL da imagem
-                savedAnimal = repository.save(savedAnimal);
+            if (!Files.exists(directoryPath)) {
+                Files.createDirectories(directoryPath);
             }
 
-            // Retorna o animal recém-criado com a imagem associada
-            return ResponseEntity.ok(new AnimalDto(savedAnimal));
+            // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
+            String fileName = savedAnimal.getIdAnimal() + "_" + file.getOriginalFilename();
+            Path filePath = directoryPath.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            // Cria a URL para acessar a imagem, com base no ID do animal
+            String imageUrl = "http://localhost:8080/uploads/" + fileName;
+            savedAnimal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
+
+            // Salva novamente o animal com a URL da imagem
+            savedAnimal = repository.save(savedAnimal);
         }
+
+        // Retorna o animal recém-criado com a imagem associada
+        return new AnimalDto(savedAnimal);
     }
 
     // Busca todos os animais
@@ -107,12 +97,37 @@ public class AnimalService {
         return listaAnimaisTipo.stream().map(AnimalDtoRead::new).toList();
     }
 
-    // Atualiza informações de um animal
-    public ResponseEntity<AnimalDto> update(Integer id, AnimalDto animalDto) {
+    // Método para recuperar a imagem
+    public Resource getImage(Integer id) throws Exception {
+
         Optional<Animal> optionalAnimal = repository.findById(id);
 
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
+            String imageUrl = animal.getImagem(); // Recupera a URL da imagem associada ao animal
+
+            if (imageUrl != null) {
+                Path imagePath = Paths.get(imageUrl.replace("http://localhost:8080/", ""));
+                File file = imagePath.toFile();
+                if (file.exists()) {
+                    Resource image = new FileSystemResource(file);
+                    return image;
+                }
+            }
+        }
+        throw new Exception("Imagem não encontrada");
+    }
+
+    // Atualiza informações de um animal
+    public AnimalDto update(Integer id, AnimalDto animalDto) throws Exception {
+        Optional<Animal> optionalAnimal = repository.findById(id);
+
+        if (optionalAnimal.isPresent()) {
+            Animal animal = optionalAnimal.get();
+
+            if (animalDto.getIdade() < 0) {
+                throw new IllegalArgumentException("A idade não pode ser menor do que zero.");
+            }
 
             // Atualizando os dados do animal, exceto a imagem
             animal.setNome(animalDto.getNome());
@@ -125,82 +140,20 @@ public class AnimalService {
             // Salvando o animal atualizado
             Animal updatedAnimal = repository.save(animal);
 
-            return ResponseEntity.ok(new AnimalDto(updatedAnimal));
+            return new AnimalDto(updatedAnimal);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new Exception("Animal não encontrado.");
         }
-    }
-
-    // Edita apenas o status de adoção do animal
-    public ResponseEntity<AnimalDto> updateStatusAdocao(Integer id, StatusAdocao statusAdocao) {
-        Optional<Animal> optionalAnimal = repository.findById(id);
-
-        if (optionalAnimal.isPresent()) {
-            Animal animal = optionalAnimal.get();
-            animal.setStatusAdocao(statusAdocao); // Atualizando o status de adoção
-            Animal updatedAnimal = repository.save(animal); // Salvando o animal com o novo status
-            return ResponseEntity.ok(new AnimalDto(updatedAnimal)); // Retornando o AnimalDto atualizado
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Caso o animal não seja encontrado
-        }
-    }
-
-    // Upload de imagem do animal
-    public ResponseEntity<String> uploadImage(Integer animalId, MultipartFile file) {
-        Optional<Animal> optionalAnimal = repository.findById(animalId);
-
-        if (optionalAnimal.isPresent()) {
-            Animal animal = optionalAnimal.get();
-            try {
-                // Verifica se o diretório existe, se não existir, é criado
-                Path directoryPath = Paths.get(uploadDir);
-                if (!Files.exists(directoryPath)) {
-                    Files.createDirectories(directoryPath);
-                }
-
-                // Salva o arquivo no diretório com o ID do animal e nome original do arquivo
-                String fileName = animalId + "_" + file.getOriginalFilename(); // Inclui o ID do animal no nome
-                Path filePath = directoryPath.resolve(fileName);
-                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                // Cria a URL para acessar a imagem, com base no ID do animal
-                String imageUrl = "http://localhost:8080/uploads/" + fileName;
-                animal.setImagem(imageUrl); // Atualiza o animal com a URL da imagem
-
-                // Salva a URL no banco de dados
-                repository.save(animal);
-
-                return ResponseEntity.ok(imageUrl); // Retorna o URL da imagem
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao fazer upload");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal não encontrado.");
-        }
-    }
-
-    // Método para recuperar a imagem
-    public Resource getImage(Integer id) {
-        String fileName = id + ".jpg"; // Ou use o nome original, conforme o seu armazenamento
-        File file = new File(uploadDir, fileName);
-
-        if (file.exists()) {
-            return new FileSystemResource(file); // Retorna o arquivo como recurso
-        }
-        return null; // Retorna null caso o arquivo não exista
     }
 
     // Remove animal
-    public ResponseEntity<String> delete(Integer id) {
+    public void delete(Integer id) {
         Optional<Animal> optionalAnimal = repository.findById(id);
 
         if (optionalAnimal.isPresent()) {
             repository.delete(optionalAnimal.get());
-            return ResponseEntity.ok("Animal removido com sucesso.");
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Animal não encontrado.");
+            throw new AnimalNotFoundException("Animal não encontrado.");
         }
     }
 

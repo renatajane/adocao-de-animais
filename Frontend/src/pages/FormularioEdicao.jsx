@@ -49,37 +49,32 @@ function FormularioEdicao() {
             descricao: animal.descricao,
         };
 
-        try {
-            const response = await fetch(`http://localhost:8080/api/animal/${animal.idAnimal}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json', // Cabeçalho para enviar JSON
-                },
-                body: JSON.stringify(updatedAnimal), // Enviar os dados no formato JSON
-            });
+        const response = await fetch(`http://localhost:8080/api/animal/${animal.idAnimal}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Cabeçalho para enviar JSON
+            },
+            body: JSON.stringify(updatedAnimal), // Enviar os dados no formato JSON
+        });
 
-            if (!response.ok) {
-                throw new Error('Erro ao editar animal');
-            }
+        const data = await response.json();
 
-            const data = await response.json();
-            console.log("Dados recebidos: ", data);
-            setMensagem({ tipo: 'success', texto: 'Dados editados com sucesso!' });
-
-            // Limpar os campos após sucesso
-            setAnimal({
-                nome: '',
-                tipo: '',
-                idade: '',
-                raca: '',
-                statusAdocao: '',
-                descricao: ''
-            });
-
-        } catch (error) {
-            console.error('Erro ao enviar dados:', error);
-            alert('Erro ao editar animal');
+        if (!response.ok) {
+            setMensagem({ tipo: 'error', texto: data.erro });
+            return;
         }
+
+        setMensagem({ tipo: 'success', texto: 'Dados editados com sucesso!' });
+
+        // Limpar os campos após sucesso
+        setAnimal({
+            nome: '',
+            tipo: '',
+            idade: '',
+            raca: '',
+            statusAdocao: '',
+            descricao: ''
+        });
     };
 
     return (
@@ -101,6 +96,10 @@ function FormularioEdicao() {
                         <option value="GATO">Gato</option>
                         <option value="COELHO">Coelho</option>
                     </select>
+                </div>
+                <div>
+                    <label>Idade:</label>
+                    <input type="number" name="idade" value={animal.idade} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Raça:</label>

@@ -1,9 +1,8 @@
 import { FaPaw, FaHeart, FaHome, FaSmile } from 'react-icons/fa'; // Ícones da biblioteca react-icons
 import React, { useEffect, useState } from 'react';
-import gato from '../assets/gato.png';
 import semFoto from '../assets/nao-tem-foto.png';
-import adocao from '../assets/img-adocao.jpg';
 import gatoCachorro from '../assets/animais-sem-fundo.png'
+import contorno from '../assets/contorno.png'
 import '../styles/Home.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +15,16 @@ function Home() {
     const [animalToDelete, setAnimalToDelete] = useState(null); // Animal selecionado para exclusão
     const [successMessage, setSuccessMessage] = useState(''); // Mensagem de sucesso
     const tiposAnimais = ['Cachorro', 'Coelho', 'Gato']; // Tipos de animais
+
+    const handleFiltroChange = (e) => {
+        setTipo(e.target.value);
+        
+        // Rolando até o container
+        const container = document.querySelector('.container');
+        if (container) {
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     // Função para buscar os animais do backend
     const fetchAnimais = async (tipo) => {
@@ -114,14 +123,14 @@ function Home() {
 
             {/* Nossos Animais */}
             <div className="header-nossos-animais">
-                <img src={adocao} alt="Adocao" className="img-adocao" />
+                <img src={contorno} alt="Adocao" className="img-adocao" />
                 <h1 className="titulo-adotar">Conheça nossos animais</h1>
                 <div className="filtro-tipo-container">
                     <p>Filtrar animal por tipo:</p>
                     <select
                         className="filtro-tipo-select"
                         value={tipo}
-                        onChange={(e) => setTipo(e.target.value)}
+                        onChange={handleFiltroChange} 
                     >
                         <option value="">Todos os tipos</option>
                         {tiposAnimais.map((t, index) => (

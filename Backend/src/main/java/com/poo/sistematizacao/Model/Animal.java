@@ -34,7 +34,7 @@ public class Animal {
 
     @Enumerated(EnumType.STRING)  
     @Column(name="tipo")
-    private TipoAnimal tipo; //ex: gato, cachorro
+    private TipoAnimal tipo; 
 
     @Column(name="idade")
     private Integer idade;
@@ -50,7 +50,7 @@ public class Animal {
     private String imagem;
 
     @Column(name="descricao")
-    private String descricao; //ex: animal faz uso contínuo de determinada medicação
+    private String descricao; 
 
     // Construtor que aceita AnimalDto
     public Animal(AnimalDto animalDto) {

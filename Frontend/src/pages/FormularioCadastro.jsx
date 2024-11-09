@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../styles/Formularios.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,7 +6,7 @@ function FormularioCadastro() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []); 
+    }, []);
 
     const [animal, setAnimal] = useState({
         nome: '',
@@ -42,36 +42,32 @@ function FormularioCadastro() {
         formData.append('descricao', animal.descricao);
         formData.append('file', animal.imagem);
 
-        try {
-            const response = await fetch('http://localhost:8080/api/animal/createWithImage', {
-                method: 'POST',
-                body: formData,
-            });
+        const response = await fetch('http://localhost:8080/api/animal/create', {
+            method: 'POST',
+            body: formData,
+        });
 
-            if (!response.ok) {
-                throw new Error('Erro ao cadastrar animal');
-            }
+        const data = await response.json();
 
-            const data = await response.json();
-            console.log("Dados recebidos: ", data);
-            setMensagem({ tipo: 'success', texto: 'Animal cadastrado com sucesso!' });
+        if (!response.ok) {
+            setMensagem({ tipo: 'error', texto: data.erro });
+            return;
+        }
 
-            // Limpar campos após submeter os dados
-            setAnimal({
-                nome: '',
-                tipo: '',
-                idade: '',
-                raca: '',
-                statusAdocao: '',
-                descricao: '',
-                imagem: null
-            });
-            if (fileInputRef.current) {
-                fileInputRef.current.value = ''; // Limpa o campo de imagem
-            }
-        } catch (error) {
-            console.error('Erro ao enviar dados:', error);
-            setMensagem({ tipo: 'error', texto: 'Erro ao enviar dados' });
+        setMensagem({ tipo: 'success', texto: 'Animal cadastrado com sucesso!' });
+
+        // Limpar campos após submeter os dados
+        setAnimal({
+            nome: '',
+            tipo: '',
+            idade: '',
+            raca: '',
+            statusAdocao: '',
+            descricao: '',
+            imagem: null
+        });
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; // Limpa o campo de imagem
         }
     };
 
