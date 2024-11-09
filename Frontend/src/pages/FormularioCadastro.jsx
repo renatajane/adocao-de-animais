@@ -81,7 +81,7 @@ function FormularioCadastro() {
 
     return (
         <div className="form-container">
-            <h1>Cadastrar Animal para Doação</h1>
+            <h1>Cadastro</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
@@ -115,7 +115,7 @@ function FormularioCadastro() {
                     <label>Imagem:</label>
                     <input type="file" name="imagem" onChange={handleFileChange} ref={fileInputRef} required />
                 </div>
-                <button type="submit">Cadastrar Animal</button>
+                <button type="submit">Salvar</button>
             </form>
 
             {mensagem && (

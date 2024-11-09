@@ -6,8 +6,8 @@ function FormularioEdicao() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []); 
-    
+    }, []);
+
     const location = useLocation(); // Pega o estado da navegação
     const navigate = useNavigate();
     const [mensagem, setMensagem] = useState(null);
@@ -64,7 +64,7 @@ function FormularioEdicao() {
 
             const data = await response.json();
             console.log("Dados recebidos: ", data);
-            setMensagem({ tipo: 'success', texto: 'Animal editado com sucesso!' });
+            setMensagem({ tipo: 'success', texto: 'Dados editados com sucesso!' });
 
             // Limpar os campos após sucesso
             setAnimal({
@@ -84,12 +84,12 @@ function FormularioEdicao() {
 
     return (
         <div className="form-container">
-            <h1>Editar Informações de Um Animal</h1>
+            <h1>Editar Dados</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Nome:</label>
                     <input type="text" name="nome"
-                        pattern="^[A-Za-z\s]+$" minLength="2"
+                        pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$" minLength="2"
                         title="O nome deve conter apenas letras e no mínimo 2 caracteres."
                         value={animal.nome} onChange={handleChange} required />
                 </div>
@@ -101,10 +101,6 @@ function FormularioEdicao() {
                         <option value="GATO">Gato</option>
                         <option value="COELHO">Coelho</option>
                     </select>
-                </div>
-                <div>
-                    <label>Idade:</label>
-                    <input type="number" name="idade" value={animal.idade} onChange={handleChange} required />
                 </div>
                 <div>
                     <label>Raça:</label>
@@ -123,7 +119,7 @@ function FormularioEdicao() {
                     <label>Descrição:</label>
                     <textarea name="descricao" value={animal.descricao} onChange={handleChange} required />
                 </div>
-                <button type="submit">Editar Animal</button>
+                <button type="submit">Salvar</button>
             </form>
 
             {mensagem && (
