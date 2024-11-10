@@ -1,4 +1,4 @@
-import { FaPaw, FaHeart, FaHome, FaSmile } from 'react-icons/fa'; // Ícones da biblioteca react-icons
+import { FaPaw, FaHeart, FaHome, FaSmile } from 'react-icons/fa'; 
 import React, { useEffect, useState } from 'react';
 import semFoto from '../assets/nao-tem-foto.png';
 import gatoCachorro from '../assets/animais-sem-fundo.png'
@@ -10,11 +10,11 @@ function Home() {
     // Estado para armazenar a lista de animais e o tipo selecionado
     const [animais, setAnimais] = useState([]);
     const [erro, setErro] = useState(null);
-    const [tipo, setTipo] = useState(''); // Estado para o tipo de animal
-    const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para controlar a confirmação de exclusão
-    const [animalToDelete, setAnimalToDelete] = useState(null); // Animal selecionado para exclusão
-    const [successMessage, setSuccessMessage] = useState(''); // Mensagem de sucesso
-    const tiposAnimais = ['Cachorro', 'Coelho', 'Gato']; // Tipos de animais
+    const [tipo, setTipo] = useState('');
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false); 
+    const [animalToDelete, setAnimalToDelete] = useState(null); 
+    const [successMessage, setSuccessMessage] = useState(''); 
+    const tiposAnimais = ['Cachorro', 'Coelho', 'Gato']; 
 
     const handleFiltroChange = (e) => {
         setTipo(e.target.value);
@@ -39,7 +39,7 @@ function Home() {
                 throw new Error('Erro na requisição');
             }
             const data = await response.json();
-            setAnimais(data); // Atualiza o estado com os dados dos animais
+            setAnimais(data); 
         } catch (error) {
             setErro('Erro ao buscar dados: ' + error.message);
             console.error('Erro ao buscar dados:', error);
@@ -63,7 +63,7 @@ function Home() {
                 throw new Error('Erro ao deletar animal');
             }
             setSuccessMessage('Animal deletado com sucesso!');
-            fetchAnimais(tipo); // Atualiza a lista de animais após a exclusão
+            fetchAnimais(tipo); 
             setShowConfirmDelete(false);
             setTimeout(() => {
                 setSuccessMessage('');

@@ -1,32 +1,32 @@
 .footer {
-    background-color: #56a292; /* Cor de fundo */
-    text-align: center; /* Centraliza o texto */
-    position: relative; /* Para posicionamento */
-    bottom: 0; /* Fixa na parte inferior se necessário */
-    width: 100%; /* Largura total */
+    background-color: #56a292; 
+    text-align: center; 
+    position: relative; 
+    bottom: 0; 
+    width: 100%; 
 }
 
 .footer-content {
-    max-width: 800px; /* Largura máxima do conteúdo */
-    margin: 0 auto; /* Centraliza o conteúdo */
+    max-width: 800px; 
+    margin: 0 auto; 
 }
 
 .footer-nav ul {
-    list-style: none; /* Remove marcadores */
-    padding: 0; /* Remove preenchimento */
+    list-style: none; 
+    padding: 0; 
 }
 
 .footer-nav li {
-    display: inline; /* Exibe itens em linha */
-    margin: 0 15px; /* Espaçamento entre links */
+    display: inline; 
+    margin: 0 15px; 
 }
 
 .footer-nav a {
-    text-decoration: none; /* Remove sublinhado */
-    color: #1f0441; /* Cor do link */
+    text-decoration: none;
+    color: #1f0441; 
 }
 
 .footer-nav a:hover {
-    text-decoration: underline; /* Sublinha ao passar o mouse */
+    text-decoration: underline; 
 }
 

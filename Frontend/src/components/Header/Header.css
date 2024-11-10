@@ -1,46 +1,45 @@
 .header {
-    background-color: #56a292; /* Cor de fundo */
-    color: white; /* Cor do texto */
-    text-align: center; /* Centraliza o texto e a imagem dentro do cabeçalho */
+    background-color: #56a292; 
+    color: white; 
+    text-align: center; 
 }
 
 .header-content {
-    max-width: 500px; /* Largura máxima do conteúdo */
-    margin: 0 auto; /* Centraliza o conteúdo */
-    display: flex; /* Flexbox para alinhar itens */
-    flex-direction: column; /* Alinha itens em coluna */
-    align-items: center; /* Centraliza verticalmente */
+    max-width: 500px; 
+    margin: 0 auto; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
 }
 
 .logo {
-    width: 150px;  /* Ajuste o tamanho conforme necessário */
-    height: auto;  /* Mantém a proporção da imagem */
+    width: 150px;  
+    height: auto;  
 }
 
 .header-nav ul {
-    list-style: none; /* Remove marcadores */
-    padding: 0; /* Remove preenchimento */
-    margin: 0; /* Remove margem */
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
 }
 
 .header-nav li {
-    display: inline; /* Exibe itens em linha */
-    margin: 0 15px; /* Espaçamento entre links */
+    display: inline; 
+    margin: 0 15px; 
 }
 
 .header-nav a {
-    text-decoration: none; /* Remove sublinhado */
-    color: black; /* Cor do link */
+    text-decoration: none; 
+    color: black; 
 }
 
 .header-nav a:hover {
-    text-decoration: underline; /* Sublinha ao passar o mouse */
+    text-decoration: underline; 
 }
 
 .header-links {
-     /* 100% da largura da tela, independente de margens */
-    background-color: #f9f6ec; /* Cor de fundo dos links */
-    padding: 10px 0; /* Espaço interno para os links */
-    margin: 0; /* Remove qualquer margem */
-    box-sizing: border-box; /* Inclui padding dentro da largura total */
+    background-color: #f9f6ec; 
+    padding: 10px 0; 
+    margin: 0; 
+    box-sizing: border-box; 
 }

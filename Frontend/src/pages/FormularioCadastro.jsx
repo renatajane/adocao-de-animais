@@ -72,7 +72,7 @@ function FormularioCadastro() {
     };
 
     const handleVoltar = () => {
-        navigate('/');  // Redireciona para a tela de home
+        navigate('/');  
     };
 
     return (

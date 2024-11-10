@@ -8,7 +8,7 @@ function FormularioEdicao() {
         window.scrollTo(0, 0);
     }, []);
 
-    const location = useLocation(); // Pega o estado da navegação
+    const location = useLocation(); 
     const navigate = useNavigate();
     const [mensagem, setMensagem] = useState(null);
     const [animal, setAnimal] = useState({
@@ -20,7 +20,7 @@ function FormularioEdicao() {
         descricao: ''
     });
 
-    // Preencher os dados do animal quando o componente for carregado
+    // Preenche os dados do animal quando o componente for carregado
     useEffect(() => {
         if (location.state && location.state.animal) {
             setAnimal(location.state.animal);
@@ -33,13 +33,13 @@ function FormularioEdicao() {
     };
 
     const handleVoltar = () => {
-        navigate('/');  // Redireciona para a tela de home
+        navigate('/');  
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Criar o objeto com os dados para enviar como JSON
+        // Cria o objeto com os dados para enviar como JSON
         const updatedAnimal = {
             nome: animal.nome,
             tipo: animal.tipo,
@@ -52,9 +52,9 @@ function FormularioEdicao() {
         const response = await fetch(`http://localhost:8080/api/animal/${animal.idAnimal}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json', // Cabeçalho para enviar JSON
+                'Content-Type': 'application/json', 
             },
-            body: JSON.stringify(updatedAnimal), // Enviar os dados no formato JSON
+            body: JSON.stringify(updatedAnimal), 
         });
 
         const data = await response.json();
@@ -66,7 +66,7 @@ function FormularioEdicao() {
 
         setMensagem({ tipo: 'success', texto: 'Dados editados com sucesso!' });
 
-        // Limpar os campos após sucesso
+        // Limpa os campos após sucesso
         setAnimal({
             nome: '',
             tipo: '',

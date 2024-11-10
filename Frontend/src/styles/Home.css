@@ -49,8 +49,6 @@
     font-size: 1rem;
 }
 
-/*-------------------------------*/
-
 /* Estilos para o container de animais */
 
 .header-nossos-animais{
@@ -86,7 +84,7 @@
 .image {
     width: 100%;
     height: 200px;
-    object-fit: cover;  /* A imagem vai cobrir o espaço disponível, mantendo a proporção */
+    object-fit: cover;  
     border-bottom: 1px solid #ddd;
 }
 
@@ -112,13 +110,10 @@
     margin: 5px 0;
 }
 
-/*-------------------------------*/
-
 /* Doação */
 .objetivo-container {
     background: #f4d99d;
     padding: 15px 30px; 
-    margin-top: 50px;
     text-align: center;
     align-items: center;
 }
@@ -153,7 +148,7 @@
     width: 200px;
     height: 150px;
     object-fit: cover;
-    margin-bottom: 30px;
+
 }
 
 /* Estilos para a imagem de "Nossos Animais" */
@@ -185,7 +180,7 @@
 }
 
 .filtro-tipo-select {
-    width: 150px;  /* Tamanho menor */
+    width: 150px;  
     padding: 8px;
     border-radius: 5px;
     font-size: 1rem;
@@ -243,19 +238,19 @@
 
 /* Efeito de hover para o botão editar */
 .link-editar:hover {
-    background-color: #31917c;  /* Azul mais escuro */
+    background-color: #31917c;  
 }
 
 /* Efeito de hover para o botão deletar */
 .link-deletar:hover {
-    background-color: #d62828;  /* Vermelho mais intenso */
+    background-color: #d62828; 
 }
 
 /* Estilo para as imagens dos animais */
 .image {
     width: 100%;
     height: 200px;
-    object-fit: cover;  /* A imagem vai cobrir o espaço disponível, mantendo a proporção */
+    object-fit: cover;  
     border-bottom: 1px solid #ddd;
 }
 
